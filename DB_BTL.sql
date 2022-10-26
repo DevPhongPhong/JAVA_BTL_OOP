@@ -6,14 +6,14 @@ GO
 GO
     CREATE TABLE Users(
         [ID] INT IDENTITY(1, 1),
-        [Dob] DATETIME NOT NULL,
+        [Dob] DATE NOT NULL,
         [Email] NVARCHAR(30) NOT NULL UNIQUE,
         [RoleID] INT NOT NULL,
         [Status] BIT NOT NULL,
         [Name] NVARCHAR(30) NOT NULL,
         [MainImage] NTEXT NOT NULL,
         [CreatedDate] DATETIME NOT NULL,
-        [CreatedByUserID] DATETIME NOT NULL,
+        [CreatedByUserID] INT NOT NULL,
         [LastestModifiedDate] DATETIME NOT NULL,
         [LastestModifiedByUserID] INT NOT NULL,
         PRIMARY KEY ([ID])
@@ -74,10 +74,10 @@ GO
         [UserID] INT NOT NULL,
         [Status] BIT NOT NULL,
         [CreatedDate] DATETIME NOT NULL,
-        [CreatedByUserID] INT NOT NULL,
         [LastestModifiedDate] DATETIME NOT NULL,
-        [LastestModifiedByUserID] INT NOT NULL,
         PRIMARY KEY ([ID]),
+        FOREIGN KEY([UserID]) REFERENCES Users([ID]),
+        FOREIGN KEY([UserID]) REFERENCES Classes([ID])
     )
 GO
     CREATE TABLE TradingWishes (
@@ -89,10 +89,10 @@ GO
         FOREIGN KEY ([ClassID]) REFERENCES Classes([ID])
     )
 GO
-    CREATE TABLE JoinTrading(
+    CREATE TABLE JoinTradings(
         [ID] INT IDENTITY(1, 1),
-        [TradingID] INT,
-        [UserID] INT,
+        [TradingID] INT NOT NULL,
+        [UserID] INT NOT NULL,
         PRIMARY KEY ([ID]),
         FOREIGN KEY ([TradingID]) REFERENCES Tradings([ID]),
         FOREIGN KEY([UserID]) REFERENCES Users([ID]),

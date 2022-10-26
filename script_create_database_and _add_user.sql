@@ -1,0 +1,217 @@
+CREATE DATABASE DB_BTL_OOP
+GO
+USE DB_BTL_OOP
+GO
+/****** Object:  User [pmcbc]    Script Date: 10/26/2022 6:13:12 PM ******/
+CREATE USER [pmcbc] FOR LOGIN [pmcbc] WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [pmcbc]
+GO
+ALTER ROLE [db_accessadmin] ADD MEMBER [pmcbc]
+GO
+ALTER ROLE [db_securityadmin] ADD MEMBER [pmcbc]
+GO
+ALTER ROLE [db_ddladmin] ADD MEMBER [pmcbc]
+GO
+ALTER ROLE [db_backupoperator] ADD MEMBER [pmcbc]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [pmcbc]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [pmcbc]
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categories](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Sector] [nvarchar](10) NULL,
+	[SectorName] [ntext] NOT NULL,
+	[Year] [tinyint] NOT NULL,
+	[Term] [tinyint] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Classes]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Classes](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[CourseID] [nvarchar](10) NOT NULL,
+	[CourseName] [ntext] NOT NULL,
+	[StudyGroup] [tinyint] NOT NULL,
+	[PracticeGroup] [tinyint] NOT NULL,
+	[ClassCode] [nvarchar](10) NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[Status] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[JoinTradings]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[JoinTradings](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[TradingID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Students]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Students](
+	[UserID] [int] NOT NULL,
+	[ClassCode] [nvarchar](15) NOT NULL,
+	[Sector] [nvarchar](10) NOT NULL,
+	[StudentCode] [nvarchar](15) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tradings]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tradings](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ClassID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+	[Status] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[LastestModifiedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TradingWishes]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TradingWishes](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[TradingID] [int] NOT NULL,
+	[ClassID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserHasClasses]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserHasClasses](
+	[ID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+	[ClassID] [int] NOT NULL,
+	[Status] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserLogins]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserLogins](
+	[UserID] [int] NOT NULL,
+	[UserName] [nvarchar](30) NOT NULL,
+	[Password] [nvarchar](64) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 10/26/2022 6:13:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Dob] [date] NOT NULL,
+	[Email] [nvarchar](30) NOT NULL,
+	[RoleID] [int] NOT NULL,
+	[Status] [bit] NOT NULL,
+	[Name] [nvarchar](30) NOT NULL,
+	[MainImage] [ntext] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[CreatedByUserID] [int] NOT NULL,
+	[LastestModifiedDate] [datetime] NOT NULL,
+	[LastestModifiedByUserID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([ID])
+GO
+ALTER TABLE [dbo].[JoinTradings]  WITH CHECK ADD FOREIGN KEY([TradingID])
+REFERENCES [dbo].[Tradings] ([ID])
+GO
+ALTER TABLE [dbo].[JoinTradings]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([ID])
+GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([ID])
+GO
+ALTER TABLE [dbo].[Tradings]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([ID])
+GO
+ALTER TABLE [dbo].[Tradings]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Classes] ([ID])
+GO
+ALTER TABLE [dbo].[TradingWishes]  WITH CHECK ADD FOREIGN KEY([ClassID])
+REFERENCES [dbo].[Classes] ([ID])
+GO
+ALTER TABLE [dbo].[TradingWishes]  WITH CHECK ADD FOREIGN KEY([TradingID])
+REFERENCES [dbo].[Tradings] ([ID])
+GO
+ALTER TABLE [dbo].[UserHasClasses]  WITH CHECK ADD FOREIGN KEY([ClassID])
+REFERENCES [dbo].[Classes] ([ID])
+GO
+ALTER TABLE [dbo].[UserHasClasses]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([ID])
+GO
+ALTER TABLE [dbo].[UserLogins]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([ID])
+GO
