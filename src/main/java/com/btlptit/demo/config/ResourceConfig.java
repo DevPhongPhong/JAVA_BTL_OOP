@@ -11,6 +11,5 @@ public class ResourceConfig implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/static/**");
-		
 	}
 }

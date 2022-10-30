@@ -52,8 +52,6 @@ public class SecurityConfiguration{
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.authorizeRequests().antMatchers("/registration**",
-											"/resources/static**",
-											"/resources**",
 											"/css/**",
 											"/js/**",
 											"/vendor/**",
