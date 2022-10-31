@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -48,6 +49,9 @@ public class User {
 					name = "role_id", referencedColumnName = "id")
 			)
 	private List<Role> roles;
+	
+	@OneToMany(mappedBy = "user")
+	private List<SwapOffer> swapOffers;
 
 	public User(String name, String email, String studentId, String password, List<Role> roles) {
 		super();

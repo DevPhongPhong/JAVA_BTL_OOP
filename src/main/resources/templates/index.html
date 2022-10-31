@@ -1,11 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Registration and Login App</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Preview</title>
 </head>
 <body>
-	<h1>Hello</h1>
+    <div class="app">
+        <div class="navbar">
+            <div class="navbar-menu">
+                <div class="homepage">
+                    <a href="./index.html">homepage</a>
+                </div>
+                <div class="dangkydoimon">
+                    <a href="./dangkydoimon.html">dangkydoimon</a>
+                </div>
+                <div class="timkiemmon">
+                    <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+            <div class="navbar-notify">
+                <div class="navbar-notify-icon">
+                    notify
+                </div>
+            </div>
+            <div class="navbar-user">
+                <div class="navbar-user-image">
+                    avatar
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="monconguoiyc">
+                <div>
+                    <p>Mon 1 co 2 yeu cau doi nhom</p>
+                    <p class="btn">Xem them</p>
+                </div>
+                <div>
+                    <p>Mon 1 co 2 yeu cau doi nhom</p>
+                    <p class="btn">Xem them</p>
+                </div>
+                <div>
+                    <p>Mon 1 co 2 yeu cau doi nhom</p>
+                    <p class="btn">Xem them</p>
+                </div>
+                <div>
+                    <p>Mon 1 co 2 yeu cau doi nhom</p>
+                    <p class="btn">Xem them</p>
+                </div>
+                <div>
+                    <p>Mon 1 co 2 yeu cau doi nhom</p>
+                    <p class="btn">Xem them</p>
+                </div>
+                <div>
+                    <p>Mon 1 co 2 yeu cau doi nhom</p>
+                    <p class="btn">Xem them</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,76 @@
+.on {
+    background-color: aqua;
+}
+
+.app .navbar {
+    display: flex;
+    height: 8vh;
+    color: white;
+    background-color: #bb2019;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.app .navbar .navbar-menu {
+    display: flex;
+}
+
+.app .navbar .navbar-menu > div {
+    padding-left: 50px;
+}
+
+.app .navbar .navbar-user {
+    display: flex;
+}
+
+.app .navbar .navbar-user .navbar-user-image {
+    display: block;
+    height: 40px;
+    width: 40px;
+    background-color: antiquewhite;
+    margin-right: 100px;
+}
+
+.app .navbar .navbar-notify .navbar-notify-icon {
+    display: block;
+    height: 30px;
+    width: 30px;
+    background-color: aqua;
+    margin-left: 900px;
+}
+
+.main {
+    margin-top: 48px;
+    width: 80vw;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main .monconguoiyc {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.main .monconguoiyc > div {
+    height: 100px;
+    width: 400px;
+}
+
+.full {
+    display: flex;
+    width: 100%;
+    padding: 0px 40px;
+    height: 100vh;
+}
+
+.monhoc {
+    width: 60vw;
+}
+
+.banglamviec {
+    display: flex;
+    justify-content: space-between;
+}
