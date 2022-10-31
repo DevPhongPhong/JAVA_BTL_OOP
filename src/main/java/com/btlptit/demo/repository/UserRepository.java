@@ -7,5 +7,5 @@ import com.btlptit.demo.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-	User findByStudentId(String studentId);
+	User findByEmail(String email);
 }

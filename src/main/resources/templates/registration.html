@@ -20,7 +20,12 @@
             	<br>
                 <div th:if="${param.success}">
                     <div class="alert alert-success">
-                        <strong>Success!</strong> Indicates a successful or positive action.
+                        <strong>Success!</strong> Registered account.
+                    </div>
+                </div>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> Account already exists.
                     </div>
                 </div>
                 <div class="signup-content">
@@ -36,7 +41,7 @@
                                 <input type="email" th:field="*{email}" id="email" placeholder="Your Email"/>
                             </div>
                             <div class="form-group">
-                                <label for="studentId"><i class="zmdi zmdi-email"></i></label>
+                                <label for="studentId"><i class="zmdi zmdi-graduation-cap"></i></label>
                                 <input type="text" th:field="*{studentId}" id="studentId" placeholder="Your Student ID"/>
                             </div>
                             <div class="form-group">
