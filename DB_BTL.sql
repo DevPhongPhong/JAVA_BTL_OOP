@@ -4,96 +4,98 @@ GO
     USE DB_BTL_OOP;
 
 GO
-    CREATE TABLE Users(
+    CREATE TABLE Roles (
         [ID] INT IDENTITY(1, 1),
-        [Dob] DATE NOT NULL,
-        [Email] NVARCHAR(30) NOT NULL UNIQUE,
-        [RoleID] INT NOT NULL,
-        [Status] BIT NOT NULL,
-        [Name] NVARCHAR(30) NOT NULL,
-        [MainImage] NTEXT NOT NULL,
-        [CreatedDate] DATETIME NOT NULL,
-        [CreatedByUserID] INT NOT NULL,
-        [LastestModifiedDate] DATETIME NOT NULL,
-        [LastestModifiedByUserID] INT NOT NULL,
+        [Name] NVARCHAR(15) NOT NULL,
+        PRIMARY KEY ([ID]),
+    )
+GO
+    CREATE TABLE Sectors(
+        [ID] INT IDENTITY(1, 1),
+        [Name] NTEXT NOT NULL,
         PRIMARY KEY ([ID])
     )
 GO
-    CREATE TABLE UserLogins (
-        [UserID] INT NOT NULL,
-        [UserName] NVARCHAR(30) NOT NULL UNIQUE,
-        [Password] Nvarchar(64) NOT NULL,
-        PRIMARY KEY ([UserID]),
-        FOREIGN KEY ([UserID]) REFERENCES Users([ID])
+    CREATE TABLE Users(
+        [ID] INT IDENTITY(1, 1),
+        [Name] NVARCHAR(30) NOT NULL,
+        -- Xác thực bằng email học viện
+        [Email] NVARCHAR(30) NOT NULL UNIQUE,
+        -- Khi đồng ý trao đổi sẽ hiện số điện thoại để người dùng tự trao đổi với nhau
+        [PhoneNumber] NVARCHAR(10) NOT NULL,
+        [RoleID] INT NOT NULL,
+        [Username] NVARCHAR(30) NOT NULL UNIQUE,
+        -- Hash SHA256
+        [Password] NVARCHAR(64) NOT NULL,
+        PRIMARY KEY ([ID]),
+        FOREIGN KEY ([RoleID]) REFERENCES Roles([ID])
     )
 GO
     CREATE TABLE Students(
         [UserID] INT NOT NULL,
-        [ClassCode] NVARCHAR(15) NOT NULL,
-        [Sector] NVARCHAR(10) NOT NULL,
-        [StudentCode] Nvarchar(15) NOT NULL,
+        --MSV
+        [StudentCode] NVARCHAR(10) NOT NULL,
+        --Ngành dùng để đề xuất những cái swap liên quan 
+        [SectorID] INT NOT NULL,
         PRIMARY KEY ([UserID]),
-        FOREIGN KEY ([UserID]) REFERENCES Users([ID])
+        FOREIGN KEY ([UserID]) REFERENCES Users([ID]),
+        FOREIGN KEY ([SectorID]) REFERENCES Sectors([ID])
     )
 GO
-    CREATE TABLE Categories(
-        [ID] INT IDENTITY(1, 1),
-        [Sector] NVARCHAR(10),
-        [SectorName] NTEXT NOT NULL,
-        [Year] TINYINT NOT NULL,
-        [Term] TINYINT NOT NULL,
-        PRIMARY KEY ([ID])
-    )
-GO
-    CREATE TABLE Classes(
-        [ID] INT IDENTITY(1, 1),
-        [CourseID] NVARCHAR(10) NOT NULL,
-        [CourseName] NTEXT NOT NULL,
-        [StudyGroup] TINYINT NOT NULL,
-        [PracticeGroup] TINYINT NOT NULL,
-        [ClassCode] NVARCHAR(10) NOT NULL,
-        [CategoryID] INT NOT NULL,
-        [Status] BIT NOT NULL,
-        PRIMARY KEY ([ID]),
-        FOREIGN KEY ([CategoryID]) REFERENCES Categories([ID])
-    )
-GO
-    CREATE TABLE UserHasClasses(
-        [ID] INT NOT NULL,
+    CREATE TABLE Administrators(
         [UserID] INT NOT NULL,
-        [ClassID] INT NOT NULL,
-        [Status] BIT NOT NULL,
-        PRIMARY KEY([ID]),
-        FOREIGN KEY([UserID]) REFERENCES Users([ID]),
-        FOREIGN KEY([ClassID]) REFERENCES Classes([ID]),
-    )
-GO
-    CREATE TABLE Tradings (
-        [ID] INT IDENTITY(1, 1),
-        [ClassID] INT NOT NULL,
-        [UserID] INT NOT NULL,
-        [Status] BIT NOT NULL,
         [CreatedDate] DATETIME NOT NULL,
-        [LastestModifiedDate] DATETIME NOT NULL,
-        PRIMARY KEY ([ID]),
-        FOREIGN KEY([UserID]) REFERENCES Users([ID]),
-        FOREIGN KEY([UserID]) REFERENCES Classes([ID])
+        [CreatedByUserID] INT,
+        PRIMARY KEY ([UserID]),
+        FOREIGN KEY ([UserID]) REFERENCES Users([ID]),
     )
 GO
-    CREATE TABLE TradingWishes (
+    CREATE TABLE Courses(
         [ID] INT IDENTITY(1, 1),
-        [TradingID] INT NOT NULL,
-        [ClassID] INT NOT NULL,
+        --Tương ứng mã môn học trong bảng đăng ký môn học của QLĐT
+        [CourseCode] NVARCHAR(10) NOT NULL,
+        -- Dùng để tìm kiếm vì người dùng nhớ tên môn hơn mã môn
+        [CourseName] NTEXT NOT NULL,
+        -- Nhóm học
+        [StudyGroup] TINYINT NOT NULL,
+        -- Nhóm thực hành (nếu không có thì giá trị bằng 0 )
+        [PracticeGroup] TINYINT NOT NULL DEFAULT 0,
         PRIMARY KEY ([ID]),
-        FOREIGN KEY ([TradingID]) REFERENCES Tradings([ID]),
-        FOREIGN KEY ([ClassID]) REFERENCES Classes([ID])
     )
 GO
-    CREATE TABLE JoinTradings(
+    CREATE TABLE Swaps (
         [ID] INT IDENTITY(1, 1),
-        [TradingID] INT NOT NULL,
-        [UserID] INT NOT NULL,
+        [CreatedByStudentID] INT NOT NULL,
+        -- ngày tạo, dùng để biết tạo sớm hay muộn để đề xuất, cũng như xóa khi hết thời hạn
+        [CreatedDate] DATETIME NOT NULL,
+        -- Nhóm học muốn đổi đi
+        [CourseID] INT NOT NULL,
         PRIMARY KEY ([ID]),
-        FOREIGN KEY ([TradingID]) REFERENCES Tradings([ID]),
-        FOREIGN KEY([UserID]) REFERENCES Users([ID]),
+        FOREIGN KEY([CreatedByStudentID]) REFERENCES Students([UserID]),
+        FOREIGN KEY([CourseID]) REFERENCES Courses([ID])
+    )
+GO
+    -- Bảng này lưu những môn mà người muốn nhận được
+    CREATE TABLE SwapWishes (
+        [ID] INT IDENTITY(1, 1),
+        [SwapID] INT NOT NULL,
+        [CourseID] INT NOT NULL,
+        PRIMARY KEY ([ID]),
+        FOREIGN KEY ([SwapID]) REFERENCES Swaps([ID]),
+        FOREIGN KEY ([CourseID]) REFERENCES Courses([ID])
+    )
+GO
+    -- Bảng này lưu những người tham gia vào 1 cái Swap nào đó
+    CREATE TABLE JoinSwaps(
+        [ID] INT IDENTITY(1, 1),
+        -- Người tham gia
+        [StudentID] INT NOT NULL,
+        -- Swap tham gia
+        [SwapID] INT NOT NULL,
+        -- Môn đổi
+        [CourseID] INT NOT NULL,
+        PRIMARY KEY ([ID]),
+        FOREIGN KEY ([SwapID]) REFERENCES Swaps([ID]),
+        FOREIGN KEY([StudentID]) REFERENCES Students([UserID]),
+        FOREIGN KEY ([CourseID]) REFERENCES Courses([ID]),
     )

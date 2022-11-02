@@ -1,76 +1,67 @@
 package com.group5.btl.model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.google.common.hash.Hashing;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
 public class User {
     @Id
-    @Column(name = "ID", columnDefinition = " INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", columnDefinition = "INT")
     @Getter
     @Setter
     private int ID;
 
-    @Column(name = "Dob", columnDefinition = "DATE", nullable = false)
-    @Getter
-    @Setter
-    private Date Dob;
-
-    @Column(name = "Email", length = 30, columnDefinition = "NVARCHAR(30)", unique = true, nullable = false)
-    @Getter
-    @Setter
-    private String Email;
-
-    @Column(name = "RoleID", columnDefinition = "INT", nullable = false)
-    @Getter
-    @Setter
-    private int RoleID;
-
-    @Column(name = "Status", columnDefinition = "BIT", nullable = false)
-    @Getter
-    @Setter
-    private boolean Status;
-
-    @Column(name = "Name", length = 30, columnDefinition = "NVARCHAR(30)", nullable = false)
+    @Column(name = "Name", columnDefinition = "NVARCHAR(30) NOT NULL")
     @Getter
     @Setter
     private String Name;
 
-    @Column(name = "MainImage", columnDefinition = "NTEXT", nullable = false)
+    @Column(name = "Email", columnDefinition = "NVARCHAR(30) NOT NULL UNIQUE")
     @Getter
     @Setter
-    private String MainImage;
+    private String Email;
 
-    @Column(name = "CreatedDate", columnDefinition = "DATETIME", nullable = false)
+    @Column(name = "PhoneNumber", columnDefinition = "NVARCHAR(10) NOT NULL")
     @Getter
     @Setter
-    private Timestamp CreatedDate;
+    public String PhoneNumber;
 
-    @Column(name = "CreatedByUserID", columnDefinition = "INT", nullable = false)
     @Getter
     @Setter
-    private int CreatedByUserID;
+    @ManyToOne
+    @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
+    private Role RoleID;
 
-    @Column(name = "LastestModifiedDate", columnDefinition = "DATETIME", nullable = false)
+    @Column(name = "Username", columnDefinition = " NVARCHAR(30) NOT NULL",unique = true)
     @Getter
     @Setter
-    private Timestamp LastestModifiedDate;
+    private String Username;
 
-    @Column(name = "LastestModifiedByUserID", columnDefinition = "INT", nullable = false)
+    @Column(name = "Password", columnDefinition = " NVARCHAR(64) NOT NULL")
     @Getter
-    @Setter
-    private int LastestModifiedByUserID;
+    private String Password;
 
+    public void setPassword(String password) {
+        this.Password = Hashing.sha256().hashString(password, null).toString();
+    }
 }
