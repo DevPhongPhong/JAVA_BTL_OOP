@@ -24,7 +24,7 @@ public class JoinSwap {
     @Column(name = "JoinSwapID", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int JoinSwapID;
+    private Integer JoinSwapID;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")

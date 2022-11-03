@@ -24,10 +24,10 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RoleID", columnDefinition = "INT")
-    private int RoleID;
+    private Integer RoleID;
 
     @Column(name = "Name", columnDefinition = "NVARCHAR(15) NOT NULL")
-    private int Name;
+    private String Name;
 
     @OneToMany(mappedBy = "RoleID",fetch = FetchType.LAZY)
     private List<User> ListUser;

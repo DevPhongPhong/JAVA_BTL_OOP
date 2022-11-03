@@ -24,7 +24,7 @@ public class SwapWish {
     @Column(name = "ID", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int ID;
+    private Integer ID;
 
     @ManyToOne
     @JoinColumn(name = "SwapID",referencedColumnName = "SwapID")

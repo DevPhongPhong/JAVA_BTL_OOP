@@ -21,5 +21,5 @@ public class Administrator extends User{
     private String CreatedDate;
 
     @Column(name = "CreatedByUserID",columnDefinition = "INT")
-    private int CreatedByUserID;
+    private Integer CreatedByUserID;
 }

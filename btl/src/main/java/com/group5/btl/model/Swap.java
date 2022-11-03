@@ -30,7 +30,7 @@ public class Swap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SwapID", columnDefinition = "INT")
-    private int SwapID;
+    private Integer SwapID;
 
     @ManyToOne
     @JoinColumn(name = "CreatedByUserID", referencedColumnName = "UserID")

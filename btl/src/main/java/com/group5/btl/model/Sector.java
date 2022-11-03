@@ -24,7 +24,7 @@ public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SectorID", columnDefinition = "INT")
-    private int SectorID;
+    private Integer SectorID;
 
     @Column(name = "Name", columnDefinition = "NTEXT NOT NULL")
     private String SectorName;

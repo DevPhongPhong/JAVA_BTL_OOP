@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.google.common.hash.Hashing;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +25,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INT")
-    private int ID;
+    private Integer ID;
 
     @Column(name = "Name", columnDefinition = "NVARCHAR(30) NOT NULL")
     private String Name;
@@ -47,8 +45,4 @@ public class User {
 
     @Column(name = "Password", columnDefinition = " NVARCHAR(64) NOT NULL")
     private String Password;
-
-    public void setPassword(String password) {
-        this.Password = Hashing.sha256().hashString(password, null).toString();
-    }
 }

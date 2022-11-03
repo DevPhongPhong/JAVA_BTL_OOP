@@ -24,7 +24,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CourseID", columnDefinition = "INT")
-    private int CourseID;
+    private Integer CourseID;
 
     @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10) NOT NULL")
     private String CourseCode;
@@ -33,10 +33,10 @@ public class Course {
     private String CourseName;
 
     @Column(name = "StudyGroup", columnDefinition = "TINYINT NOT NULL")
-    private short StudyGroup;
+    private Short StudyGroup;
 
     @Column(name = "PracticeGroup", columnDefinition = "TINYINT NOT NULL")
-    private short PracticeGroup;
+    private Short PracticeGroup;
 
     @OneToMany(mappedBy = "CourseID",fetch = FetchType.LAZY)
     private List<Swap> ListSwap;
