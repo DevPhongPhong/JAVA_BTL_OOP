@@ -17,43 +17,35 @@ import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Swaps")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Swap {
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SwapID", columnDefinition = "INT")
     private int SwapID;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "CreatedByUserID", referencedColumnName = "UserID")
     private Student CreatedByUserID;
 
     @Column(name = "CreatedDate", columnDefinition = " DATETIME NOT NULL")
-    @Getter
-    @Setter
     private Timestamp CreatedDate;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "CourseID", referencedColumnName = "CourseID")
     private Course CourseID;
-
-    @Getter
-    @Setter
+    
     @OneToMany(mappedBy = "SwapID")
     private List<SwapWish> ListSwapWish;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "SwapID")
     private List<JoinSwap> ListJoinSwap;
 }

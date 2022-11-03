@@ -11,26 +11,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Sectors")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SectorID", columnDefinition = "INT")
-    @Getter
-    @Setter
     private int SectorID;
 
     @Column(name = "Name", columnDefinition = "NTEXT NOT NULL")
-    @Getter
-    @Setter
     private String SectorName;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "SectorID",fetch = FetchType.LAZY)
     private List<Student> ListStudent;
 }

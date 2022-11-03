@@ -11,43 +11,33 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Course")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CourseID", columnDefinition = "INT")
-    @Getter
-    @Setter
     private int CourseID;
 
     @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10) NOT NULL")
-    @Getter
-    @Setter
     private String CourseCode;
 
-
-    
     @Column(name = "CourseName", columnDefinition = "NTEXT NOT NULL")
-    @Getter
-    @Setter
     private String CourseName;
 
     @Column(name = "StudyGroup", columnDefinition = "TINYINT NOT NULL")
-    @Getter
-    @Setter
     private short StudyGroup;
 
     @Column(name = "PracticeGroup", columnDefinition = "TINYINT NOT NULL")
-    @Getter
-    @Setter
     private short PracticeGroup;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "CourseID",fetch = FetchType.LAZY)
     private List<Swap> ListSwap;
 }

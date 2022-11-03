@@ -12,27 +12,27 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Students")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "UserID")
 public class Student extends User {
 
     @Column(name = "StudentCode", columnDefinition = "NVARCHAR(10) NOT NULL")
-    @Getter
-    @Setter
     private String StudentCode;
 
-    @Getter
-    @Setter
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SectorID", referencedColumnName = "SectorID")
     private Sector SectorID;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "CreatedByUserID",fetch = FetchType.LAZY)
     private List<Swap> ListSwap;
 }

@@ -4,25 +4,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Administrators")
-
-
-
-
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Administrator extends User{
 
     @Column(name = "CreatedDate",columnDefinition = "DATETIME NOT NULL")
-    @Getter
-    @Setter
     private String CreatedDate;
 
     @Column(name = "CreatedByUserID",columnDefinition = "INT")
-    @Getter
-    @Setter
     private int CreatedByUserID;
 }

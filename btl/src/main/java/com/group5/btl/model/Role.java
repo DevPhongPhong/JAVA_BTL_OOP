@@ -11,26 +11,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Roles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RoleID", columnDefinition = "INT")
-    @Getter
-    @Setter
     private int RoleID;
 
     @Column(name = "Name", columnDefinition = "NVARCHAR(15) NOT NULL")
-    @Getter
-    @Setter
     private int Name;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "RoleID",fetch = FetchType.LAZY)
     private List<User> ListUser;
 
