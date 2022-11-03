@@ -12,28 +12,30 @@ import com.group5.btl.repository.UserRepository;
 public class UserServiceImpl implements UserService {
     UserRepository _userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        super();
+    public UserServiceImpl (UserRepository userRepository){
         _userRepository = userRepository;
     }
 
-    public List<User> findAll() {
-        return _userRepository.findAll();
+    @Override
+    public User GetUserByID(int id) {
+        return _userRepository.findById(id).get();
     }
 
-    public Optional<User> findByID(int ID) {
-        return _userRepository.findById(ID);
+    @Override
+    public int InsertUser(User user) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
-    public User saveAndFlush(User entity) {
-        return _userRepository.saveAndFlush(entity);
+    @Override
+    public int UpdateUser(User user) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
-    public User save(User entity) {
-        return _userRepository.save(entity);
-    }
-
-    public void flush() {
-        _userRepository.flush();
+    @Override
+    public boolean DeleteUserByID(int id) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
