@@ -17,4 +17,10 @@ public class UserServiceImpl implements UserSevice{
 		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), reg.getPassword());
 		return userRepository.save(user);
 	}
+
+	@Override
+	public User findByEmail(String email) {
+		User user = userRepository.findByEmail(email);
+		return user;
+	}
 }

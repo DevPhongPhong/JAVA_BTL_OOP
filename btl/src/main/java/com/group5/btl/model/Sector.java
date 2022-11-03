@@ -16,19 +16,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Sectors")
+@Table(name = "sectors")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SectorID")
-    private Integer SectorID;
+    private Integer id;
 
-    @Column(name = "Name")
-    private String SectorName;
+    private String name;
 
-    @OneToMany(mappedBy = "SectorID",fetch = FetchType.LAZY)
-    private List<Student> ListStudent;
+    @OneToMany(mappedBy = "sectorID",fetch = FetchType.LAZY)
+    private List<Student> listStudents;
 }

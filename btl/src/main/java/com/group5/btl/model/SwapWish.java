@@ -15,23 +15,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "SwapWishes")
+@Table(name = "swapWishes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SwapWish {
-
-    @Column(name = "ID")
+	
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer ID;
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "SwapID",referencedColumnName = "SwapID")
-    private Swap SwapID;
+    @JoinColumn(name = "swap_id")
+    private Swap swapId;
 
     @ManyToOne
-    @JoinColumn(name = "CourseID", referencedColumnName = "CourseID")
-    private Course CourseID;
+    @JoinColumn(name = "course_id")
+    private Course courseId;
 
 }

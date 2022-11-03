@@ -15,26 +15,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "JoinSwaps")
+@Table(name = "joinswaps")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class JoinSwap {
 
-    @Column(name = "JoinSwapID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer JoinSwapID;
+    private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
-    private Student UserID;
+    @JoinColumn(name = "user_id")
+    private Student userId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SwapID", referencedColumnName = "SwapID")
-    private Swap SwapID;
+    @JoinColumn(name = "swap_id")
+    private Swap swapId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "CourseID", referencedColumnName = "CourseID")
-    private Course CourseID;
+    @JoinColumn(name = "course_id")
+    private Course courseId;
 }

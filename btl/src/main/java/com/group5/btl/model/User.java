@@ -18,38 +18,35 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Users", uniqueConstraints = { @UniqueConstraint(columnNames = {"Email"}), @UniqueConstraint(columnNames = {"PhoneNumber"}) })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"}), @UniqueConstraint(columnNames = {"phone_number"}) })
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer ID;
+    private Integer id;
 
-    @Column(name = "Name")
-    private String Name;
+    private String name;
 
-    @Column(name = "Email")
-    private String Email;
+    private String email;
 
-    @Column(name = "PhoneNumber")
-    public String PhoneNumber;
+    @Column(name = "phone_number")
+    public String phoneNumber;
     
-    @Column(name = "Password")
-    private String Password;
+    private String password;
 
     @ManyToOne
-    @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
-    private Role RoleID;
+    @JoinColumn(name = "role_id")
+    private Role roleId;
 
 	public User(String name, String email, String phoneNumber, String password) {
 		super();
-		Name = name;
-		Email = email;
-		PhoneNumber = phoneNumber;
-		Password = password;
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
 	}
   
+    
 }
