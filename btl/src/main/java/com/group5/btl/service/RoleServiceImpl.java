@@ -8,12 +8,13 @@ import com.group5.btl.repository.RoleRepository;
 
 @Service
 public class RoleServiceImpl implements RoleService{
-//	@Autowired
-//	private RoleRepository roleRepository;
-//	
-//	@Override
-//	public Role getByName(String name) {
-//		Role role = roleRepository.findByName(name);
-//		return role;
-//	}
+	@Autowired
+	private RoleRepository roleRepository;
+
+	@Override
+	public Role findByName(String name) {
+		Role role = roleRepository.findByName("USER");
+		return role;
+	}
+
 }

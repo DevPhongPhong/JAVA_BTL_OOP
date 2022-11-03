@@ -12,9 +12,12 @@ public class UserServiceImpl implements UserSevice{
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private RoleService roleService;
+	
 	@Override
 	public User save(UserRegistrationDto reg) {
-		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), reg.getPassword());
+		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), reg.getPassword(), roleService.findByName("USER"));
 		return userRepository.save(user);
 	}
 
