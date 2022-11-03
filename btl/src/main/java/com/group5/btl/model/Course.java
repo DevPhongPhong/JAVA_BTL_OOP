@@ -23,19 +23,19 @@ import lombok.NoArgsConstructor;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CourseID", columnDefinition = "INT")
+    @Column(name = "CourseID")
     private Integer CourseID;
 
-    @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10) NOT NULL")
+    @Column(name = "CourseCode")
     private String CourseCode;
 
-    @Column(name = "CourseName", columnDefinition = "NTEXT NOT NULL")
+    @Column(name = "CourseName")
     private String CourseName;
 
-    @Column(name = "StudyGroup", columnDefinition = "TINYINT NOT NULL")
+    @Column(name = "StudyGroup")
     private Short StudyGroup;
 
-    @Column(name = "PracticeGroup", columnDefinition = "TINYINT NOT NULL")
+    @Column(name = "PracticeGroup")
     private Short PracticeGroup;
 
     @OneToMany(mappedBy = "CourseID",fetch = FetchType.LAZY)

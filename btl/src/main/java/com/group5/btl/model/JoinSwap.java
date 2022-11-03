@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JoinSwap {
 
-    @Column(name = "JoinSwapID", columnDefinition = "INT")
+    @Column(name = "JoinSwapID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer JoinSwapID;

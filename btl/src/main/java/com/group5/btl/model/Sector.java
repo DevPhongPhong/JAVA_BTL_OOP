@@ -23,10 +23,10 @@ import lombok.NoArgsConstructor;
 public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SectorID", columnDefinition = "INT")
+    @Column(name = "SectorID")
     private Integer SectorID;
 
-    @Column(name = "Name", columnDefinition = "NTEXT NOT NULL")
+    @Column(name = "Name")
     private String SectorName;
 
     @OneToMany(mappedBy = "SectorID",fetch = FetchType.LAZY)

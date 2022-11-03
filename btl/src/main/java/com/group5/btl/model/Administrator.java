@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public class Administrator extends User{
 
-    @Column(name = "CreatedDate",columnDefinition = "DATETIME NOT NULL")
+    @Column(name = "CreatedDate")
     private String CreatedDate;
 
-    @Column(name = "CreatedByUserID",columnDefinition = "INT")
+    @Column(name = "CreatedByUserID")
     private Integer CreatedByUserID;
 }

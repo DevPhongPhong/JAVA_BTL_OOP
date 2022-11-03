@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SwapWish {
 
-    @Column(name = "ID", columnDefinition = "INT")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer ID;

@@ -29,18 +29,18 @@ import lombok.NoArgsConstructor;
 public class Swap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SwapID", columnDefinition = "INT")
+    @Column(name = "SwapID")
     private Integer SwapID;
 
     @ManyToOne
     @JoinColumn(name = "CreatedByUserID", referencedColumnName = "UserID")
     private Student CreatedByUserID;
 
-    @Column(name = "CreatedDate", columnDefinition = " DATETIME NOT NULL")
+    @Column(name = "CreatedDate")
     private Timestamp CreatedDate;
 
     @ManyToOne
-    @JoinColumn(name = "CourseID", referencedColumnName = "CourseID")
+    @JoinColumn(name = "CourseID")
     private Course CourseID;
     
     @OneToMany(mappedBy = "SwapID")
