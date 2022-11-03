@@ -26,7 +26,7 @@ public class Sector {
     @Column(name = "SectorID", columnDefinition = "INT")
     private int SectorID;
 
-    @Column(name = "Name", columnDefinition = "NTEXT NOT NULL")
+    @Column(name = "Name", columnDefinition = "NTEXT",nullable = false)
     private String SectorName;
 
     @OneToMany(mappedBy = "SectorID",fetch = FetchType.LAZY)

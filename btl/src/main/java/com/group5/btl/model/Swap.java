@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,16 +37,16 @@ public class Swap {
     @JoinColumn(name = "CreatedByUserID", referencedColumnName = "UserID")
     private Student CreatedByUserID;
 
-    @Column(name = "CreatedDate", columnDefinition = " DATETIME NOT NULL")
+    @Column(name = "CreatedDate", columnDefinition = " DATETIME",nullable = false)
     private Timestamp CreatedDate;
 
     @ManyToOne
     @JoinColumn(name = "CourseID", referencedColumnName = "CourseID")
     private Course CourseID;
     
-    @OneToMany(mappedBy = "SwapID")
+    @OneToMany(mappedBy = "SwapID",fetch = FetchType.LAZY)
     private List<SwapWish> ListSwapWish;
 
-    @OneToMany(mappedBy = "SwapID")
+    @OneToMany(mappedBy = "SwapID",fetch = FetchType.LAZY)
     private List<JoinSwap> ListJoinSwap;
 }

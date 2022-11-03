@@ -26,8 +26,8 @@ public class Role {
     @Column(name = "RoleID", columnDefinition = "INT")
     private int RoleID;
 
-    @Column(name = "Name", columnDefinition = "NVARCHAR(15) NOT NULL")
-    private int Name;
+    @Column(name = "Name", columnDefinition = "NVARCHAR(15)",nullable = false)
+    private String Name;
 
     @OneToMany(mappedBy = "RoleID",fetch = FetchType.LAZY)
     private List<User> ListUser;

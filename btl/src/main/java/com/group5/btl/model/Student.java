@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @PrimaryKeyJoinColumn(name = "UserID")
 public class Student extends User {
 
-    @Column(name = "StudentCode", columnDefinition = "NVARCHAR(10) NOT NULL")
+    @Column(name = "StudentCode", columnDefinition = "NVARCHAR(10)",nullable = false)
     private String StudentCode;
 
     @ManyToOne(cascade = CascadeType.ALL)

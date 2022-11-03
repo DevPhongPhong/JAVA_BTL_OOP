@@ -14,38 +14,52 @@ import javax.persistence.Table;
 import com.google.common.hash.Hashing;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INT")
+    @Getter
+    @Setter
     private int ID;
 
     @Column(name = "Name", columnDefinition = "NVARCHAR(30) NOT NULL")
+    @Getter
+    @Setter
     private String Name;
 
     @Column(name = "Email", columnDefinition = "NVARCHAR(30) NOT NULL UNIQUE")
+    @Getter
+    @Setter
     private String Email;
 
     @Column(name = "PhoneNumber", columnDefinition = "NVARCHAR(10) NOT NULL")
+    @Getter
+    @Setter
     public String PhoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
+    @Getter
+    @Setter
     private Role RoleID;
 
     @Column(name = "Username", columnDefinition = " NVARCHAR(30) NOT NULL", unique = true)
+    @Getter
+    @Setter
     private String Username;
 
     @Column(name = "Password", columnDefinition = " NVARCHAR(64) NOT NULL")
+    @Getter
     private String Password;
 
     public void setPassword(String password) {

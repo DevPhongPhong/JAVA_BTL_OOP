@@ -26,16 +26,16 @@ public class Course {
     @Column(name = "CourseID", columnDefinition = "INT")
     private int CourseID;
 
-    @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10) NOT NULL")
+    @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10)",nullable = false)
     private String CourseCode;
 
-    @Column(name = "CourseName", columnDefinition = "NTEXT NOT NULL")
+    @Column(name = "CourseName", columnDefinition = "NTEXT",nullable = false)
     private String CourseName;
 
-    @Column(name = "StudyGroup", columnDefinition = "TINYINT NOT NULL")
+    @Column(name = "StudyGroup", columnDefinition = "TINYINT",nullable = false)
     private short StudyGroup;
 
-    @Column(name = "PracticeGroup", columnDefinition = "TINYINT NOT NULL")
+    @Column(name = "PracticeGroup", columnDefinition = "TINYINT",nullable = false)
     private short PracticeGroup;
 
     @OneToMany(mappedBy = "CourseID",fetch = FetchType.LAZY)
