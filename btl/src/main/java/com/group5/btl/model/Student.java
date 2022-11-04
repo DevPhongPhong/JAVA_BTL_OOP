@@ -18,21 +18,29 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Students")
+@Table(name = "students")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "UserID")
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends User {
 
+<<<<<<< HEAD
     @Column(name = "StudentCode", columnDefinition = "NVARCHAR(10)",nullable = false)
     private String StudentCode;
+=======
+    @Column(name = "student_code")
+    private String studentCode;
+>>>>>>> login
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SectorID", referencedColumnName = "SectorID")
-    private Sector SectorID;
+    @JoinColumn(name = "sector_id")
+    private Sector sectorID;
 
-    @OneToMany(mappedBy = "CreatedByUserID",fetch = FetchType.LAZY)
-    private List<Swap> ListSwap;
+    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY)
+    private List<Swap> listSwaps;
+    
+//    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+//    private List<JoinSwap> listJoinSwaps;
 }

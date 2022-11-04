@@ -23,30 +23,42 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Swaps")
+@Table(name = "swaps")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Swap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SwapID", columnDefinition = "INT")
-    private int SwapID;
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "CreatedByUserID", referencedColumnName = "UserID")
-    private Student CreatedByUserID;
+    @JoinColumn(name = "user_id")
+    private Student userId;
 
+<<<<<<< HEAD
     @Column(name = "CreatedDate", columnDefinition = " DATETIME",nullable = false)
     private Timestamp CreatedDate;
+=======
+    @Column(name = "created_date")
+    private Timestamp createdDate;
+>>>>>>> login
 
     @ManyToOne
-    @JoinColumn(name = "CourseID", referencedColumnName = "CourseID")
-    private Course CourseID;
+    @JoinColumn(name = "course_id")
+    private Course courseId;
     
+<<<<<<< HEAD
     @OneToMany(mappedBy = "SwapID",fetch = FetchType.LAZY)
     private List<SwapWish> ListSwapWish;
 
     @OneToMany(mappedBy = "SwapID",fetch = FetchType.LAZY)
     private List<JoinSwap> ListJoinSwap;
+=======
+    @OneToMany(mappedBy = "swapId")
+    private List<SwapWish> listSwapWishs;
+
+    @OneToMany(mappedBy = "swapId")
+    private List<JoinSwap> listJoinSwaps;
+>>>>>>> login
 }

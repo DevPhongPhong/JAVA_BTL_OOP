@@ -16,20 +16,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Roles")
+@Table(name = "roles")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RoleID", columnDefinition = "INT")
-    private int RoleID;
+    private Integer id;
 
+<<<<<<< HEAD
     @Column(name = "Name", columnDefinition = "NVARCHAR(15)",nullable = false)
     private String Name;
+=======
+    private String name;
+>>>>>>> login
 
-    @OneToMany(mappedBy = "RoleID",fetch = FetchType.LAZY)
-    private List<User> ListUser;
+    @OneToMany(mappedBy = "roleId",fetch = FetchType.LAZY)
+    private List<User> users;
 
 }

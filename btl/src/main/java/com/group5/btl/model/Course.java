@@ -16,16 +16,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Course")
+@Table(name = "courses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CourseID", columnDefinition = "INT")
-    private int CourseID;
+    private Integer id;
 
+<<<<<<< HEAD
     @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10)",nullable = false)
     private String CourseCode;
 
@@ -37,7 +37,23 @@ public class Course {
 
     @Column(name = "PracticeGroup", columnDefinition = "TINYINT",nullable = false)
     private short PracticeGroup;
+=======
+    @Column(name = "course_code")
+    private String courseCode;
 
-    @OneToMany(mappedBy = "CourseID",fetch = FetchType.LAZY)
-    private List<Swap> ListSwap;
+    @Column(name = "course_name", columnDefinition = ("nvarchar(255)"))
+    private String courseName;
+
+    @Column(name = "study_group")
+    private Short studyGroup;
+
+    @Column(name = "practice_group")
+    private Short practiceGroup;
+>>>>>>> login
+
+    @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
+    private List<Swap> listSwaps;
+    
+//    @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
+//    private List<SwapWish> listsSwapWishs;
 }

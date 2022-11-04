@@ -10,8 +10,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.google.common.hash.Hashing;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,13 +19,19 @@ import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+<<<<<<< HEAD
 @Table(name = "Users")
 
+=======
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"}), @UniqueConstraint(columnNames = {"phone_number"}) })
+@Data
+>>>>>>> login
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
     @Column(name = "ID", columnDefinition = "INT")
     @Getter
     @Setter
@@ -65,4 +70,31 @@ public class User {
     public void setPassword(String password) {
         this.Password = Hashing.sha256().hashString(password, null).toString();
     }
+=======
+    private Integer id;
+    
+    @Column(columnDefinition = ("nvarchar(255)"))
+    private String name;
+
+    private String email;
+
+    @Column(name = "phone_number")
+    public String phoneNumber;
+    
+    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role roleId;
+
+	public User(String name, String email, String phoneNumber, String password, Role roleId) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.roleId = roleId;
+	}  
+    
+>>>>>>> login
 }

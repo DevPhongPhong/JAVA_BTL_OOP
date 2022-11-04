@@ -16,19 +16,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Sectors")
+@Table(name = "sectors")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SectorID", columnDefinition = "INT")
-    private int SectorID;
+    private Integer id;
+    
+    @Column(columnDefinition = "nvarchar(255)")
+    private String name;
 
+<<<<<<< HEAD
     @Column(name = "Name", columnDefinition = "NTEXT",nullable = false)
     private String SectorName;
 
     @OneToMany(mappedBy = "SectorID",fetch = FetchType.LAZY)
     private List<Student> ListStudent;
+=======
+    @OneToMany(mappedBy = "sectorID",fetch = FetchType.LAZY)
+    private List<Student> listStudents;
+>>>>>>> login
 }
