@@ -24,7 +24,8 @@ public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    
+    @Column(columnDefinition = "nvarchar(255)")
     private String name;
 
     @OneToMany(mappedBy = "sectorID",fetch = FetchType.LAZY)

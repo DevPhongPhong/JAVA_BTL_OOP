@@ -27,6 +27,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @Column(columnDefinition = ("nvarchar(255)"))
     private String name;
 
     private String email;

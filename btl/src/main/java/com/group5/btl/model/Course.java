@@ -28,7 +28,7 @@ public class Course {
     @Column(name = "course_code")
     private String courseCode;
 
-    @Column(name = "course_name")
+    @Column(name = "course_name", columnDefinition = ("nvarchar(255)"))
     private String courseName;
 
     @Column(name = "study_group")
