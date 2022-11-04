@@ -26,13 +26,8 @@ import lombok.NoArgsConstructor;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends User {
 
-<<<<<<< HEAD
-    @Column(name = "StudentCode", columnDefinition = "NVARCHAR(10)",nullable = false)
-    private String StudentCode;
-=======
     @Column(name = "student_code")
     private String studentCode;
->>>>>>> login
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sector_id")

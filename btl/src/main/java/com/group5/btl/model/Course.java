@@ -25,19 +25,6 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-<<<<<<< HEAD
-    @Column(name = "CourseCode", columnDefinition = "NVARCHAR(10)",nullable = false)
-    private String CourseCode;
-
-    @Column(name = "CourseName", columnDefinition = "NTEXT",nullable = false)
-    private String CourseName;
-
-    @Column(name = "StudyGroup", columnDefinition = "TINYINT",nullable = false)
-    private short StudyGroup;
-
-    @Column(name = "PracticeGroup", columnDefinition = "TINYINT",nullable = false)
-    private short PracticeGroup;
-=======
     @Column(name = "course_code")
     private String courseCode;
 
@@ -49,7 +36,6 @@ public class Course {
 
     @Column(name = "practice_group")
     private Short practiceGroup;
->>>>>>> login
 
     @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
     private List<Swap> listSwaps;

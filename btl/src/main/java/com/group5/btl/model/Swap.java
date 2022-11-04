@@ -36,29 +36,16 @@ public class Swap {
     @JoinColumn(name = "user_id")
     private Student userId;
 
-<<<<<<< HEAD
-    @Column(name = "CreatedDate", columnDefinition = " DATETIME",nullable = false)
-    private Timestamp CreatedDate;
-=======
     @Column(name = "created_date")
     private Timestamp createdDate;
->>>>>>> login
 
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course courseId;
     
-<<<<<<< HEAD
-    @OneToMany(mappedBy = "SwapID",fetch = FetchType.LAZY)
-    private List<SwapWish> ListSwapWish;
-
-    @OneToMany(mappedBy = "SwapID",fetch = FetchType.LAZY)
-    private List<JoinSwap> ListJoinSwap;
-=======
     @OneToMany(mappedBy = "swapId")
     private List<SwapWish> listSwapWishs;
 
     @OneToMany(mappedBy = "swapId")
     private List<JoinSwap> listJoinSwaps;
->>>>>>> login
 }

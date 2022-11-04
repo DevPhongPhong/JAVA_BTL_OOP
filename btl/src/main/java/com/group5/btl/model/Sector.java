@@ -28,14 +28,6 @@ public class Sector {
     @Column(columnDefinition = "nvarchar(255)")
     private String name;
 
-<<<<<<< HEAD
-    @Column(name = "Name", columnDefinition = "NTEXT",nullable = false)
-    private String SectorName;
-
-    @OneToMany(mappedBy = "SectorID",fetch = FetchType.LAZY)
-    private List<Student> ListStudent;
-=======
     @OneToMany(mappedBy = "sectorID",fetch = FetchType.LAZY)
     private List<Student> listStudents;
->>>>>>> login
 }

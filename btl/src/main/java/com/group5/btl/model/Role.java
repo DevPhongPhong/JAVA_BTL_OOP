@@ -25,12 +25,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-<<<<<<< HEAD
-    @Column(name = "Name", columnDefinition = "NVARCHAR(15)",nullable = false)
-    private String Name;
-=======
     private String name;
->>>>>>> login
 
     @OneToMany(mappedBy = "roleId",fetch = FetchType.LAZY)
     private List<User> users;

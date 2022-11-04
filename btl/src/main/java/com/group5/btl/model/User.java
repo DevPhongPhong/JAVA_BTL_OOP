@@ -13,64 +13,18 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-<<<<<<< HEAD
-@Table(name = "Users")
-
-=======
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"}), @UniqueConstraint(columnNames = {"phone_number"}) })
 @Data
->>>>>>> login
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-    @Column(name = "ID", columnDefinition = "INT")
-    @Getter
-    @Setter
-    private int ID;
-
-    @Column(name = "Name", columnDefinition = "NVARCHAR(30) NOT NULL")
-    @Getter
-    @Setter
-    private String Name;
-
-    @Column(name = "Email", columnDefinition = "NVARCHAR(30) NOT NULL UNIQUE")
-    @Getter
-    @Setter
-    private String Email;
-
-    @Column(name = "PhoneNumber", columnDefinition = "NVARCHAR(10) NOT NULL")
-    @Getter
-    @Setter
-    public String PhoneNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
-    @Getter
-    @Setter
-    private Role RoleID;
-
-    @Column(name = "Username", columnDefinition = " NVARCHAR(30) NOT NULL", unique = true)
-    @Getter
-    @Setter
-    private String Username;
-
-    @Column(name = "Password", columnDefinition = " NVARCHAR(64) NOT NULL")
-    @Getter
-    private String Password;
-
-    public void setPassword(String password) {
-        this.Password = Hashing.sha256().hashString(password, null).toString();
-    }
-=======
     private Integer id;
     
     @Column(columnDefinition = ("nvarchar(255)"))
@@ -96,5 +50,4 @@ public class User {
 		this.roleId = roleId;
 	}  
     
->>>>>>> login
 }
