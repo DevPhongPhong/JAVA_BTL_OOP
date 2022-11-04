@@ -11,5 +11,6 @@
 	<div th:object="${roles}">
 		<p th:utext="${roles}"></p>
 	</div>
+	<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
 </body>
 </html>

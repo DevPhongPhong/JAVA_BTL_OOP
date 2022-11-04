@@ -47,6 +47,16 @@ Validator.isEmail = function (selector) {
 	};
 };
 
+Validator.isPhonenumber = function (selector) {
+	return {
+		selector: selector,
+		test: function(value) {
+			let regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+			return regex.test(value) ? undefined : "Vui long nhap dung dinh dang so dien thoai!";
+		}
+	}
+}
+
 Validator.minLength = function (selector, min) {
 	return {
 		selector: selector,
@@ -70,6 +80,7 @@ Validator({
 	rules: [
 		Validator.isRequired("#name"),
 		Validator.isEmail("#email"),
+		Validator.isPhonenumber("#phonenumber"),
 		Validator.minLength("#pass", 6),
 		Validator.isCOnfirmed("#re_pass", function() {
 			return document.querySelector("#register-form #pass").value;
