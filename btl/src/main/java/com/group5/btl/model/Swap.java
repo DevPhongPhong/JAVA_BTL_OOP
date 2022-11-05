@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,13 +34,16 @@ public class Swap {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+//    @NotNull
     private Student userId;
 
     @Column(name = "created_date")
+    @NotNull
     private Timestamp createdDate;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+//    @NotNull
     private Course courseId;
     
     @OneToMany(mappedBy = "swapId")

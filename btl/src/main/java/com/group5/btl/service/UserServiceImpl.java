@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserSevice{
 	
 	@Override
 	public User save(UserRegistrationDto reg) {
-		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), passwordEncoder.encode(reg.getPassword()), roleService.findByName("USER"));
+		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), passwordEncoder.encode(reg.getPassword()), roleService.findByName("USER") );
 		return userRepository.save(user);
 	}
 

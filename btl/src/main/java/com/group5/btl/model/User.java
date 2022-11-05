@@ -11,10 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -23,22 +25,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @NotNull
     @Column(columnDefinition = ("nvarchar(255)"))
     private String name;
 
+    @NotNull
     private String email;
-
+    
+    @NotNull
     @Column(name = "phone_number")
     public String phoneNumber;
     
+    @NotNull
     private String password;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @NotNull
     private Role roleId;
 
 	public User(String name, String email, String phoneNumber, String password, Role roleId) {
