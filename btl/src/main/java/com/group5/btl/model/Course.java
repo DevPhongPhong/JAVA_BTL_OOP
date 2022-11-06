@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,15 +27,19 @@ public class Course {
     private Integer id;
 
     @Column(name = "course_code")
+    @NotNull
     private String courseCode;
 
     @Column(name = "course_name", columnDefinition = ("nvarchar(255)"))
+    @NotNull
     private String courseName;
 
     @Column(name = "study_group")
+    @NotNull
     private Short studyGroup;
 
     @Column(name = "practice_group")
+    @NotNull
     private Short practiceGroup;
 
     @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)

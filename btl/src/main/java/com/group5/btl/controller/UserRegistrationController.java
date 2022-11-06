@@ -1,5 +1,7 @@
 package com.group5.btl.controller;
 
+import java.io.Console;
+
 import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ public class UserRegistrationController {
 	@PostMapping
 	public String registrationAccount(@ModelAttribute("user") UserRegistrationDto reg) {
 		try {
-			userSevice.save(reg);			
+			userSevice.save(reg);
 		} catch (Exception e) {
 			return "redirect:/registration?error";
 		}

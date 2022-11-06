@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,10 +28,12 @@ public class SwapWish {
 
     @ManyToOne
     @JoinColumn(name = "swap_id")
+//    @NotNull
     private Swap swapId;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+//    @NotNull
     private Course courseId;
 
 }

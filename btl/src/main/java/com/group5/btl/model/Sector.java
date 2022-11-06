@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class Sector {
     private Integer id;
     
     @Column(columnDefinition = "nvarchar(255)")
+    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "sectorID",fetch = FetchType.LAZY)

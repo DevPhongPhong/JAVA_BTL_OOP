@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,10 +28,12 @@ import lombok.NoArgsConstructor;
 public class Student extends User {
 
     @Column(name = "student_code")
+    @NotNull
     private String studentCode;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sector_id")
+//    @NotNull
     private Sector sectorID;
 
     @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY)
