@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,25 +25,21 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "course_code")
-    @NotNull
+    @Column(name = "course_code",columnDefinition = "NVARCHAR(15)", length = 15, nullable = false)
     private String courseCode;
 
-    @Column(name = "course_name", columnDefinition = ("nvarchar(255)"))
-    @NotNull
+    @Column(name = "course_name", columnDefinition = "NVARCHAR(255)",length = 255, nullable = false)
     private String courseName;
 
-    @Column(name = "study_group")
-    @NotNull
+    @Column(name = "study_group", nullable = false)
     private Short studyGroup;
 
-    @Column(name = "practice_group")
-    @NotNull
+    @Column(name = "practice_group", nullable = false)
     private Short practiceGroup;
 
-    @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
     private List<Swap> listSwaps;
-    
-//    @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
-//    private List<SwapWish> listsSwapWishs;
+
+    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
+    private List<SwapWish> listsSwapWishs;
 }

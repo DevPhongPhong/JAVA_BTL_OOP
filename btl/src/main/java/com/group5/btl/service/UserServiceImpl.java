@@ -2,13 +2,9 @@ package com.group5.btl.service;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,7 +29,7 @@ public class UserServiceImpl implements UserSevice{
 	
 	@Override
 	public User save(UserRegistrationDto reg) {
-		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), passwordEncoder.encode(reg.getPassword()), roleService.findByName("USER") );
+		User user = new User(reg.getName(), reg.getEmail(), reg.getPhoneNumber(), passwordEncoder.encode(reg.getPassword()), roleService.findByName("STUDENT") );
 		return userRepository.save(user);
 	}
 
