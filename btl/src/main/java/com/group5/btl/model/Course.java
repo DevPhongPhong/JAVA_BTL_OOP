@@ -42,9 +42,9 @@ public class Course {
     @NotNull
     private Short practiceGroup;
 
-    @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
     private List<Swap> listSwaps;
-    
-//    @OneToMany(mappedBy = "courseId",fetch = FetchType.LAZY)
-//    private List<SwapWish> listsSwapWishs;
+
+    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
+    private List<SwapWish> listsSwapWishs;
 }

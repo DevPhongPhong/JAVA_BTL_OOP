@@ -33,12 +33,12 @@ public class Student extends User {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sector_id")
-//    @NotNull
+    // @NotNull
     private Sector sectorID;
 
-    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private List<Swap> listSwaps;
-    
-//    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-//    private List<JoinSwap> listJoinSwaps;
+
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    private List<JoinSwap> listJoinSwaps;
 }
