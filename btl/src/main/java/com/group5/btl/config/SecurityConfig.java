@@ -54,7 +54,8 @@ public class SecurityConfig{
 											"/vendor/**",
 											"/images/**",
 											"/fonts/**",
-											"/scss/**").permitAll()
+											"/scss/**",
+											"/home").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

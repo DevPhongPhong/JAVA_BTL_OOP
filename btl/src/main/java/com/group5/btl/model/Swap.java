@@ -2,7 +2,6 @@ package com.group5.btl.model;
 
 import java.sql.Timestamp;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

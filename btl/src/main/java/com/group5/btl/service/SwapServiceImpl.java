@@ -4,10 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
-
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +12,6 @@ import com.group5.btl.dto.swap.SwapInfo;
 import com.group5.btl.dto.swap.SwapPreview;
 import com.group5.btl.dto.swap.SwapUpdate;
 import com.group5.btl.model.Course;
-import com.group5.btl.model.JoinSwap;
 import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
 import com.group5.btl.model.SwapWish;
@@ -90,7 +85,7 @@ public class SwapServiceImpl implements SwapService {
 
     @Override
     public SwapInfo getInfo(Swap swap) {
-        var si = new SwapInfo(swap.getId(), swap.getListSwapWishs(), swap.getListJoinSwaps());
+        var si = new SwapInfo(swap.getId(), swap.getListSwapWishs());
         return si;
     }
 
@@ -124,9 +119,9 @@ public class SwapServiceImpl implements SwapService {
         try {
             var swapRes = _swapRepository.save(swap);
             res++;
-            for (int i : swapCreate.getListCourseID()) {
+            for (int i : swapCreate.getListCourseWishID()) {
                 var courseWish = _courseRepository.findById(i).get();
-                SwapWish sw = new SwapWish(0, swapRes, courseWish);
+                SwapWish sw = new SwapWish(null, swapRes, courseWish, null);
                 _swapWishRepository.save(sw);
                 res++;
             }
@@ -138,37 +133,38 @@ public class SwapServiceImpl implements SwapService {
 
     @Override
     public void update(SwapUpdate swapUpdate) {
-        // var oldSwap = _swapRepository.findById(swapUpdate.getSwapId()).get();
-        // var listOldSwapWish = oldSwap.getListSwapWishs();
-        // var listNewCourseId = swapUpdate.getListCourseID();
+        var oldSwap = _swapRepository.findById(swapUpdate.getSwapId()).get();
+        var listNewCourseID = swapUpdate.getListCourseID();
 
-        // for (SwapWish sw : listOldSwapWish) {
-        //     if (!listNewCourseId.contains(sw.getCourseId().getId())) {
-        //         listNewCourseId.remove(sw.getCourseId().getId());
-        //         listOldSwapWish.remove(sw);
-                
-        //     }
-        // }
+        for (SwapWish sw : oldSwap.getListSwapWishs()) {
+            if (!listNewCourseID.contains(sw.getCourseId().getId())) {
+                if (sw.getListJoinSwaps() != null)
+                    for (var item : sw.getListJoinSwaps()) {
+                        _joinSwapRepository.delete(item);
+                    }
+                _swapWishRepository.delete(sw);
+            } else
+                listNewCourseID.remove(sw.getId());
+        }
 
-        // for (int i : listNewCourseId) {
-        //     listOldSwapWish.add(new SwapWish(0, oldSwap, _courseRepository.findById(i).get()));
-        // }
-        // oldSwap.setListSwapWishs(listOldSwapWish);
-        // _swapRepository.saveAndFlush(oldSwap);
+        for (int i : listNewCourseID) {
+            var sw = new SwapWish(null, oldSwap, _courseRepository.findById(i).get(), null);
+            _swapWishRepository.save(sw);
+        }
     }
 
     @Override
     public int delete(int id) {
         var swap = _swapRepository.findById(id).get();
         var listSwapWishs = swap.getListSwapWishs();
-        var listJoinSwaps = swap.getListJoinSwaps();
         var res = 0;
-
-        for (JoinSwap js : listJoinSwaps) {
-            _joinSwapRepository.delete(js);
-            res++;
-        }
         for (SwapWish sw : listSwapWishs) {
+            if (sw.getListJoinSwaps() != null && sw.getListJoinSwaps().size() > 0) {
+                for (var item : sw.getListJoinSwaps()) {
+                    _joinSwapRepository.deleteById(item.getId());
+                    res++;
+                }
+            }
             _swapWishRepository.delete(sw);
             res++;
         }

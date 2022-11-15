@@ -2,7 +2,6 @@ package com.group5.btl.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class Student extends User {
     @Column(name = "student_code",columnDefinition = "NVARCHAR(15)",length = 15, nullable = false)
     private String studentCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "sector_id",nullable = false)
     private Sector sectorID;
 
