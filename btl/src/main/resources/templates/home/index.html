@@ -8,8 +8,8 @@
 </head>
 <body>
 	<h1>Home Page</h1>
-	<div th:object="${roles}">
-		<p th:utext="${roles}"></p>
+	<div th:object="${cntt}">
+		<p th:utext="${cntt}"></p>
 	</div>
 	<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
 </body>

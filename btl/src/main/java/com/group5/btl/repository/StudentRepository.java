@@ -7,5 +7,5 @@ import com.group5.btl.model.Student;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Integer> {
-    
+//    Student save(Student student);
 }

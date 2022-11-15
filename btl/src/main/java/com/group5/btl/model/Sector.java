@@ -24,6 +24,9 @@ public class Sector {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @Column(columnDefinition = "nvarchar(100) unique",nullable = false)
+    private String sectorCode;
+    
     @Column(columnDefinition = "nvarchar(100)",nullable = false)
     private String name;
 

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.group5.btl.dto.UserRegistrationDto;
+import com.group5.btl.model.Student;
+import com.group5.btl.service.StudentService;
 import com.group5.btl.service.UserSevice;
 
 @Controller
@@ -16,6 +18,9 @@ import com.group5.btl.service.UserSevice;
 public class UserRegistrationController {
 	@Autowired
 	private UserSevice userSevice;
+	
+	@Autowired
+	private StudentService studentService;
 	
 	@GetMapping()
 	public String registration(Model model) {
@@ -26,7 +31,8 @@ public class UserRegistrationController {
 	@PostMapping
 	public String registrationAccount(@ModelAttribute("user") UserRegistrationDto reg) {
 		try {
-			userSevice.save(reg);
+//			userSevice.save(reg);
+			studentService.save(reg);
 		} catch (Exception e) {
 			return "redirect:/registration?error";
 		}

@@ -7,5 +7,5 @@ import com.group5.btl.model.Sector;
 
 @Repository
 public interface SectorRepository extends JpaRepository<Sector,Integer> {
-    
+    Sector findBySectorCode(String sectorCode);
 }
