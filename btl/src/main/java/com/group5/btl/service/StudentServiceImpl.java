@@ -31,4 +31,9 @@ public class StudentServiceImpl implements StudentService {
 		return studentRepository.save(student);
 	}
 
+	@Override
+	public Student findByEmail(String email) {
+		return studentRepository.findByEmail(email);
+	}
+
 }

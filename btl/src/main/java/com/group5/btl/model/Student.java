@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@EqualsAndHashCode(callSuper = true)
-//@PrimaryKeyJoinColumn(name = "user_id")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@EqualsAndHashCode(callSuper = true)
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends User {
     @Column(name = "student_code",columnDefinition = "NVARCHAR(15)",length = 15, nullable = false)
     private String studentCode;

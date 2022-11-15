@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.group5.btl.repository.UserRepository;
+import com.group5.btl.service.StudentService;
 import com.group5.btl.service.sector.SectorService;
 @Controller
 @RequestMapping("home")
@@ -14,10 +16,13 @@ public class HomeController {
 	@Autowired
 	private SectorService sectorService;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
     @GetMapping()
     public String Index(Model model) {
     	
-    	model.addAttribute("cntt", sectorService.findByCode("CNTT"));
+    	model.addAttribute("cntt", userRepository.findByEmail("test1@gmail.com"));
         return "home/index";
     }
 }
