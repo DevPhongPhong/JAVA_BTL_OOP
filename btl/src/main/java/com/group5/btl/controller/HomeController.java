@@ -13,16 +13,9 @@ import com.group5.btl.service.sector.SectorService;
 @RequestMapping("home")
 public class HomeController {
 	
-	@Autowired
-	private SectorService sectorService;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
     @GetMapping()
     public String Index(Model model) {
-    	
-    	model.addAttribute("cntt", userRepository.findByEmail("test1@gmail.com"));
+ 
         return "home/index";
     }
 }

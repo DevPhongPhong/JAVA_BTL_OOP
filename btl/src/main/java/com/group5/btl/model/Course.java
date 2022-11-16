@@ -25,10 +25,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "course_code",columnDefinition = "NVARCHAR(15)", length = 15, nullable = false)
+    @Column(name = "course_code",columnDefinition = "nvarchar(15)", length = 15, nullable = false)
     private String courseCode;
 
-    @Column(name = "course_name", columnDefinition = "NVARCHAR(255)",length = 255, nullable = false)
+    @Column(name = "course_name", columnDefinition = "nvarchar(255)",length = 255, nullable = false)
     private String courseName;
 
     @Column(name = "study_group", nullable = false)
