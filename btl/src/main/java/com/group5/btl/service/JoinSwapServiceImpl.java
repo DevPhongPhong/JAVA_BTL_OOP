@@ -19,7 +19,7 @@ public class JoinSwapServiceImpl implements JoinSwapService {
 
     @Override
     public JoinSwapPreview GetPreview(JoinSwap js) {
-        return new JoinSwapPreview(js.getId(), js.getUserId().getName());
+        return new JoinSwapPreview(js.getId(),js.getUserId().getId(), js.getUserId().getName());
     }
     
 }

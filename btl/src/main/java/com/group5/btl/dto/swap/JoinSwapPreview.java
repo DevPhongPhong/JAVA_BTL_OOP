@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JoinSwapPreview {
     public int ID;
+    public int UserID;
     public String userName;
 }
