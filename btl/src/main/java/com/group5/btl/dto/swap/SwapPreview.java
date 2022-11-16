@@ -9,8 +9,11 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SwapPreview {
-    private int id;
-    private Student userId;
-    private String createdDate;
-    private Course courseId;
+    public int id;
+    public String userName;
+    public String createdDate;
+    public String courseCode;
+    public String courseName;
+    public Short studyGroup;
+    public Short practiceGroup;
 }
