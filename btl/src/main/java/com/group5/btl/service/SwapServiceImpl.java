@@ -11,6 +11,7 @@ import com.group5.btl.dto.swap.SwapCreate;
 import com.group5.btl.dto.swap.SwapInfo;
 import com.group5.btl.dto.swap.SwapPreview;
 import com.group5.btl.dto.swap.SwapUpdate;
+import com.group5.btl.dto.swap.SwapWishPreview;
 import com.group5.btl.model.Course;
 import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
@@ -33,13 +34,14 @@ public class SwapServiceImpl implements SwapService {
     private CourseRepository _courseRepository;
     @Autowired
     private JoinSwapRepository _joinSwapRepository;
+    @Autowired
+    private SwapWishService _sws;
 
     // #region Private Method
     private void sortByCreatedDate(String type, List<Swap> listSwap) throws Exception {
         if (type == "ASC" || type == "DESC") {
             Collections.sort(listSwap, (s1, s2) -> {
                 if (type == "ASC")
-                    // compare two instance of `Score` and return `int` as result.
                     return s1.getCreatedDate().compareTo(s2.getCreatedDate());
                 else {
                     return s2.getCreatedDate().compareTo(s1.getCreatedDate());
@@ -79,14 +81,23 @@ public class SwapServiceImpl implements SwapService {
 
     @Override
     public SwapPreview getPreview(Swap swap) {
-        var sp = new SwapPreview(swap.getId(), swap.getUserId(), swap.getCreatedDate().toString(), swap.getCourseId());
+        var sp = new SwapPreview(swap.getId(),
+                swap.getUserId().getName(),
+                swap.getCreatedDate().toString(),
+                swap.getCourseId().getCourseCode(),
+                swap.getCourseId().getCourseName(),
+                swap.getCourseId().getStudyGroup(),
+                swap.getCourseId().getPracticeGroup());
         return sp;
     }
 
     @Override
     public SwapInfo getInfo(Swap swap) {
-        var si = new SwapInfo(swap.getId(), swap.getListSwapWishs());
-        return si;
+        var list = new ArrayList<SwapWishPreview>();
+        for (var item : swap.getListSwapWishs()) {
+            list.add(_sws.GetSwapWishPreview(item));
+        }
+        return new SwapInfo(swap.getId(), list);
     }
 
     @Override
