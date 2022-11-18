@@ -1,14 +1,22 @@
 package com.group5.btl.service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group5.btl.dto.swap.JoinSwapPreview;
 import com.group5.btl.model.JoinSwap;
+import com.group5.btl.model.Student;
+import com.group5.btl.model.SwapWish;
 import com.group5.btl.repository.JoinSwapRepository;
 
 @Service
 public class JoinSwapServiceImpl implements JoinSwapService {
+    @Autowired
+    private EntityManager _em;
+
     @Autowired
     private JoinSwapRepository _jsr;
 
@@ -19,7 +27,25 @@ public class JoinSwapServiceImpl implements JoinSwapService {
 
     @Override
     public JoinSwapPreview GetPreview(JoinSwap js) {
-        return new JoinSwapPreview(js.getId(),js.getUserId().getId(), js.getUserId().getName());
+        return new JoinSwapPreview(js.getId(), js.getUserId().getId(), js.getUserId().getName());
     }
-    
+
+    @Override
+    public void CreateJoinSwap(SwapWish sw, Student s) {
+        var js = new JoinSwap(0, s, sw);
+        _jsr.save(js);
+    }
+
+    @Override
+    public void DeleteJoinSwap(JoinSwap js) {
+        _jsr.delete(js);
+    }
+
+    @Override
+    public JoinSwap GetByStudentAndSwapWish(int stuId, int swID) {
+        TypedQuery<JoinSwap> query = _em.createQuery("SELECT js FROM JoinSwap js " +
+                "WHERE js.swapWish = " + swID + " AND js.userId = " + stuId, JoinSwap.class);
+        return (JoinSwap) query.getSingleResult();
+    }
+
 }
