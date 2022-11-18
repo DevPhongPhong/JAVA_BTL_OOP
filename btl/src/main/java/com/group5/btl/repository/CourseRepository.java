@@ -7,5 +7,5 @@ import com.group5.btl.model.Course;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Integer>{
-    
+    Course findByCourseCodeAndPracticeGroupAndStudyGroup(String courseCode, Short practiceGroup, Short studyGroup);
 }

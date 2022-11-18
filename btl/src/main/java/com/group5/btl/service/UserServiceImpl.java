@@ -2,6 +2,7 @@ package com.group5.btl.service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.group5.btl.dto.UserRegistrationDto;
+import com.group5.btl.dto.user.UserPreview;
 import com.group5.btl.model.Role;
 import com.group5.btl.model.User;
 import com.group5.btl.repository.UserRepository;
@@ -50,5 +52,11 @@ public class UserServiceImpl implements UserSevice{
 	
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+
+	@Override
+	public UserPreview getUserPreview(int id) {
+		User user = userRepository.findById(id).get();
+		return new UserPreview(user.getId(), user.getName());
 	}
 }
