@@ -3,6 +3,7 @@ package com.group5.btl.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -48,7 +49,9 @@ public class SecurityConfig{
 	
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		http.authorizeRequests().antMatchers("/registration**",
+		http
+			.csrf().disable()
+			.authorizeRequests().antMatchers("/registration**",
 											"/css/**",
 											"/js/**",
 											"/vendor/**",
@@ -56,6 +59,9 @@ public class SecurityConfig{
 											"/fonts/**",
 											"/scss/**",
 											"/home").permitAll()
+			.antMatchers("/user/get/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/swap").permitAll()
+			.antMatchers(HttpMethod.GET, "/swapwish/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

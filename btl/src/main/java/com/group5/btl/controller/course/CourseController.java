@@ -1,0 +1,26 @@
+package com.group5.btl.controller.course;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.group5.btl.model.Course;
+import com.group5.btl.service.CourseService;
+
+@RestController
+@RequestMapping("/course")
+public class CourseController {
+	@Autowired
+	private CourseService courseService;
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@PostMapping("/add")
+	public ResponseEntity addCourse(@RequestBody Course course) {
+		
+		return ResponseEntity.ok().body(course);
+	}
+}

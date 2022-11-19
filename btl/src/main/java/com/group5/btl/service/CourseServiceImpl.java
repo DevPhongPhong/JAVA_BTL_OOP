@@ -15,5 +15,11 @@ public class CourseServiceImpl implements CourseService {
     public Course getById(int id) {
        return _courseRepository.findById(id).get();
     }
+
+	@Override
+	public Course getByCodeAndPracticeAndStudy(String courseCode, Short practiceGroup, Short studyGroup) {
+		// TODO Auto-generated method stub
+		return _courseRepository.findByCourseCodeAndPracticeGroupAndStudyGroup(courseCode, practiceGroup, studyGroup);
+	}
     
 }
