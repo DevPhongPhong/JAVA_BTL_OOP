@@ -53,12 +53,11 @@ function showUserPreview(id) {
 
 function createSwap() {
     courseId = $("#courseid")[0].value;
-    userId = $("#userid")[0].value;
     listCourseWishID = [$("#wishid")[0].value];
 
     var formData = {
         courseId: courseId,
-        userId: userId,
+        userId: 0,
         listCourseWishID: listCourseWishID
     }
 

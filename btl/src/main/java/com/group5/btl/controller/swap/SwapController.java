@@ -42,6 +42,7 @@ public class SwapController {
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity deleteSwap(@PathVariable(name="id") Integer swapId) {
+		
 		int res = swapService.delete(swapId);
 		return ResponseEntity.ok().build();
 	}
