@@ -14,6 +14,7 @@ $(document).ready(function() {
 		var id = $(this).data('id');
         showSwapWishPreView(id);
 	})
+	
 });
 
 function loadData() {
@@ -75,6 +76,42 @@ function showSwapWishPreView(id) {
     $.ajax({
         url: `http://localhost:8080/swapwish/${id}`,
         type: 'GET',
+        success: function(rs) {
+            console.log(rs)
+        } 
+    })
+}
+
+function createJoinSwap() {
+    var formData = {
+        userId: 1,
+        swapWishId: 9
+    }
+
+    $.ajax({
+        url: "http://localhost:8080/swapwish/join",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData)
+    }).done(function(ketqua) {
+        console.log("done")
+    })
+}
+
+function deleteSwap() {
+    $.ajax({
+        url: "http://localhost:8080/swap/delete/6",
+        type: "DELETE",
+        success: function(rs) {
+            console.log(rs)
+        } 
+    })
+}
+
+function deleteJoinSwap() {
+    $.ajax({
+        url: "http://localhost:8080/swapwish/delete/1",
+        type: "DELETE",
         success: function(rs) {
             console.log(rs)
         } 
