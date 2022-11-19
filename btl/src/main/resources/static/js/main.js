@@ -14,6 +14,7 @@ $(document).ready(function () {
         var id = $(this).data('id');
         showSwapWishPreView(id);
     })
+<<<<<<< HEAD
 	
 	$("body").on("click", ".get-info", function() {
 		var hasBubble = $(".bubble")
@@ -22,14 +23,27 @@ $(document).ready(function () {
 		}
 		$(this).parent().parent().addClass("bubble")
 	})
+=======
+
+    $("body").on("click", ".paginbtn", function () {
+        var page = $(this).data('page');
+        loadData(page);
+    })
+
+>>>>>>> 219e63731508c3a658074e84d6fb20d2cccb6b81
 });
 
-function loadData() {
+function loadData(page) {
+    console.log('http://localhost:8080/swap' + (page != undefined ? '/' + page : ''));
     $.ajax({
-        url: 'http://localhost:8080/swap',
+        url: 'http://localhost:8080/swap' + (page != undefined ? '/' + page : ''),
         type: 'GET',
-        success: function (swaps) {
+        success: function (res) {
+            swaps = res.listObject
+            countPage = res.countPage
+            pageNow = res.page
             ul_listSwapPreview = document.getElementById("ul_listSwapPreview")
+<<<<<<< HEAD
             swaps.map(function (swap) {
                 var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" id="swapId-` + swap.id + `">
                 \n\t\t\t\t\t\t\t\t\t<ul class="list">
@@ -45,7 +59,38 @@ function loadData() {
                 \n\t\t\t\t\t\t\t\t\t</div>
                 \n\t\t\t\t\t\t\t\t</li>`;
                 ul_listSwapPreview.innerHTML += htmlString;
+=======
+            $("#ul_listSwapPreview").fadeOut(() => {
+                if (swaps == undefined) ul_listSwapPreview.innerHTML = 'Không có dữ liệu'
+                ul_listSwapPreview.innerHTML = ''
+                swaps.map(function (swap) {
+                    var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item" id="swapId-` + swap.id + `">
+                    \n\t\t\t\t\t\t\t\t\t<ul class="list">
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời đăng: `+ swap.userName + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Môn học: `+ swap.courseName + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm môn học: `+ swap.studyGroup + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm thực hành: `+ swap.practiceGroup + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Thời gian đăng: `+ swap.createdDate + `</li>
+                    \n\t\t\t\t\t\t\t\t\t</ul>
+                    \n\t\t\t\t\t\t\t\t\t<br />
+                    \n\t\t\t\t\t\t\t\t\t<div class="row">
+                    \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ swap.id + `>Thông tin</a>
+                    \n\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t</li>`;
+                    ul_listSwapPreview.innerHTML += htmlString;
+                })
+>>>>>>> 219e63731508c3a658074e84d6fb20d2cccb6b81
             })
+            $("#ul_listSwapPreview").fadeIn();
+
+
+            paging = document.getElementById("paging")
+            paging.innerHTML = ''
+            for (let i = 1; i <= countPage; i++) {
+                paging.innerHTML += `\n\t\t\t\t\t\t\t\t<div class="col-sm paging">
+                \n\t\t\t\t\t\t\t\t\t<button class="btn btn`+ (pageNow == i ? '' : '-outline') + `-danger paginbtn" data-page=` + i + `>` + i + `</button>
+                \n\t\t\t\t\t\t\t\t</div>`
+            }
         }
     })
 }
@@ -86,23 +131,30 @@ function showSwapWishPreView(id) {
         type: 'GET',
         success: function (swapWishPreviews) {
             ul_swapInfo = document.getElementById("ul_swapInfo")
-            ul_swapInfo.innerHTML=''
-            swapWishPreviews.map(function (swapWishPreview) {
-                var htmlString = `
-                \n\t\t\t\t\t\t\t\t<li class="list-group-item">
-                \n\t\t\t\t\t\t\t\t\t<div class="row">
-                \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">
-                \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list">
-                \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm học: `+ swapWishPreview.studyGroup + `</li>
-                \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm thực hành: `+ swapWishPreview.practiceGroup + `</li>
-                \n\t\t\t\t\t\t\t\t\t\t\t</ul>
-                \n\t\t\t\t\t\t\t\t\t\t</div>
-                \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: 80</div>
-                \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><a href="" class="btn btn-danger float-right">Thông tin</a></div>
-                \n\t\t\t\t\t\t\t\t\t</div>
-                \n\t\t\t\t\t\t\t\t</li>`;
-                ul_swapInfo.innerHTML += htmlString;
-            })
+            $("#ul_swapInfo").fadeOut(() => {
+                if (swapWishPreviews.length == 0) ul_swapInfo.innerHTML = 'Không có dữ liệu'
+                else {
+                    ul_swapInfo.innerHTML = ''
+                    swapWishPreviews.map(function (swapWishPreview) {
+                        var htmlString = `
+                    \n\t\t\t\t\t\t\t\t<li class="list-group-item">
+                    \n\t\t\t\t\t\t\t\t\t<div class="row">
+                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">
+                    \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list">
+                    \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm học: `+ swapWishPreview.studyGroup + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm thực hành: `+ swapWishPreview.practiceGroup + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t\t</ul>
+                    \n\t\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: `+swapWishPreview.listJoinSwapPreview.length+`</div>
+                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><a href="`+swapWishPreview.ID+`" class="btn btn-danger float-right">Tham gia</a></div>
+                    \n\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t</li>`;
+                        ul_swapInfo.innerHTML += htmlString;
+                    })
+                }
+            });
+
+            $("#ul_swapInfo").fadeIn();
         }
     })
 }
