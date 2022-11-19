@@ -10,7 +10,10 @@ $(document).ready(function() {
         createSwap();
     })
     
-    $("#swap-btn-")
+    $("body").on("click", ".swap-btn-view-wish", function() {
+		var id = $(this).data('id');
+        showSwapWishPreView(id);
+	})
 });
 
 function loadData() {
@@ -28,7 +31,7 @@ function loadData() {
                         <p class="swap-course-name">courseName: ${swap.courseName}</p>
                         <p class="swap-study-group">studyGroup: ${swap.studyGroup}</p>
                         <p class="swap-practice-group">practiceGroup: ${swap.practiceGroup}</p>
-                        <button id="view-wish-${swap.id}" class="swap-btn-view-wish" type="button">View Wish</button>
+                        <button data-id="${swap.id}" class="swap-btn-view-wish" type="button">View Wish</button>
                     </div>
                 `;
             })
@@ -64,6 +67,16 @@ function createSwap() {
         contentType: 'application/json',
         data: JSON.stringify(formData)
     }).done(function(ketqua) {
-        alert("thanh cong")
+        console.log("done")
+    })
+}
+
+function showSwapWishPreView(id) {
+    $.ajax({
+        url: `http://localhost:8080/swapwish/${id}`,
+        type: 'GET',
+        success: function(rs) {
+            console.log(rs)
+        } 
     })
 }

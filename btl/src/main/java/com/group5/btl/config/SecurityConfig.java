@@ -61,6 +61,7 @@ public class SecurityConfig{
 											"/home").permitAll()
 			.antMatchers("/user/get/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/swap").permitAll()
+			.antMatchers(HttpMethod.GET, "/swapwish/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
