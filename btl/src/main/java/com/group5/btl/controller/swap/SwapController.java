@@ -29,7 +29,7 @@ public class SwapController {
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping
 	public List<SwapPreview> getListSwap() {
-		return swapService.getPreviews(swapService.getAll(), 1, 3);
+		return swapService.getPreviews(swapService.getAll(), 1, 10);
 	}
 	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
