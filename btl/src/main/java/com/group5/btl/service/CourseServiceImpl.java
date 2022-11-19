@@ -1,5 +1,8 @@
 package com.group5.btl.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +16,21 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getById(int id) {
-       return _courseRepository.findById(id).get();
+        return _courseRepository.findById(id).get();
     }
 
-	@Override
-	public Course getByCodeAndPracticeAndStudy(String courseCode, Short practiceGroup, Short studyGroup) {
-		// TODO Auto-generated method stub
-		return _courseRepository.findByCourseCodeAndPracticeGroupAndStudyGroup(courseCode, practiceGroup, studyGroup);
-	}
-    
+    @Override
+    public List<Course> getByCodeAndPracticeAndStudy(String courseCode, Short practiceGroup, Short studyGroup) {
+        if (practiceGroup == 0 && studyGroup == 0)
+            return _courseRepository.findByCourseCode(courseCode);
+        else if (practiceGroup == 0) {
+            return _courseRepository.findByCourseCodeAndStudyGroup(courseCode,studyGroup);
+        } else if (studyGroup == 0) {
+            return _courseRepository.findByCourseCodeAndPracticeGroup(courseCode, practiceGroup);
+        }
+        var res = new ArrayList<Course>();
+        res.add(_courseRepository.findByCourseCodeAndPracticeGroupAndStudyGroup(courseCode, practiceGroup, studyGroup));
+        return res;
+    }
+
 }
