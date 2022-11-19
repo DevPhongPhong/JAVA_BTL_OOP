@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.emitter.Emitable;
 
 import com.group5.btl.dto.UserRegistrationDto;
 import com.group5.btl.dto.user.UserPreview;
@@ -57,6 +58,12 @@ public class UserServiceImpl implements UserSevice{
 	@Override
 	public UserPreview getUserPreview(int id) {
 		User user = userRepository.findById(id).get();
+		return new UserPreview(user.getId(), user.getName());
+	}
+
+	@Override
+	public UserPreview getUserPreviewByEmail(String email) {
+		User user = userRepository.findByEmail(email);
 		return new UserPreview(user.getId(), user.getName());
 	}
 }

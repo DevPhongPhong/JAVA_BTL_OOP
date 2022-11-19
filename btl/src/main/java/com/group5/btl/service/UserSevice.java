@@ -10,4 +10,5 @@ public interface UserSevice extends UserDetailsService{
 	User save(UserRegistrationDto userRegistrationDto);
 	User findByEmail(String email);
 	UserPreview getUserPreview(int id);
+	UserPreview getUserPreviewByEmail(String email);
 }
