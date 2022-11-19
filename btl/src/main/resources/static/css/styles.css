@@ -4,3 +4,6 @@
 .card{
     border: 1px solid rgb(220 53 69);
 }
+.paging {
+    padding: 0;
+}

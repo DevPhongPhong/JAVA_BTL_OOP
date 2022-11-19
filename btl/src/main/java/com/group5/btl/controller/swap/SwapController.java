@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.group5.btl.dto.PagingDto;
 import com.group5.btl.dto.swap.SwapCreate;
 import com.group5.btl.dto.swap.SwapPreview;
 import com.group5.btl.model.Swap;
@@ -24,24 +25,34 @@ import java.util.*;
 @RequestMapping("/swap")
 public class SwapController {
 	@Autowired
-	private SwapService swapService; 
+	private SwapService swapService;
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping
-	public List<SwapPreview> getListSwap() {
-		return swapService.getPreviews(swapService.getAll(), 1, 10);
+	public PagingDto<SwapPreview> getListSwap() {
+		var list = swapService.getAll();
+		var res = swapService.getPreviews(list, 1, 5);
+		return new PagingDto<SwapPreview>(1, list.size() / 5 + 1, res);
 	}
-	
+
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@GetMapping("/{page}")
+	public PagingDto<SwapPreview> getListSwap(@PathVariable(name = "page")int page) {
+		var list = swapService.getAll();
+		var res = swapService.getPreviews(list, page, 5);
+		return new PagingDto<SwapPreview>(page, list.size() / 5 + 1, res);
+	}
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/add")
 	public ResponseEntity addSwap(@RequestBody SwapCreate swapCreate) {
 		swapService.create(swapCreate);
 		return ResponseEntity.ok().body(swapCreate);
 	}
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity deleteSwap(@PathVariable(name="id") Integer swapId) {
+	public ResponseEntity deleteSwap(@PathVariable(name = "id") Integer swapId) {
 		int res = swapService.delete(swapId);
 		return ResponseEntity.ok().build();
 	}
