@@ -121,10 +121,32 @@ function searchCourse() {
 
 function showSwapByCourseId(courseId) {
 	$.ajax({
-        url: `http://localhost:8080/swap/${courseId}`,
+        url: `http://localhost:8080/swap/get/${courseId}`,
         type: 'GET',
-        success: function (rs) {
-            console.log(rs)
+        success: function (swapList) {
+            ul_swapInfo = document.getElementById("ul_swapInfo")
+            $("#ul_swapInfo").fadeOut(() => {
+                if (swapList.length == 0) ul_swapInfo.innerHTML = 'Không có dữ liệu'
+                else {
+                    ul_swapInfo.innerHTML = ''
+                    swapList.map(function (swap) {
+                        var htmlString = `
+                    \n\t\t\t\t\t\t\t\t<li class="list-group-item">
+                    \n\t\t\t\t\t\t\t\t\t<div class="row">
+                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-8">
+                    \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list">
+                    \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Người đăng: `+ swap.userName + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Ngày tạo: `+ swap.createdDate + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t\t</ul>
+                    \n\t\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t</li>`;
+                        ul_swapInfo.innerHTML += htmlString;
+                    })
+                }
+            });
+
+            $("#ul_swapInfo").fadeIn();
         }
     })
 }

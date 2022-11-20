@@ -190,15 +190,14 @@ public class SwapServiceImpl implements SwapService {
 
 	@Override
 	public List<SwapPreview> getByCourseId(Integer courseId) {
-		Course course = _courseRepository.findById(courseId).get();
-//		List<Swap> listSwaps = _swapRepository.findByCourseId(course);
+		Course course = courseService.getById(courseId);
+		List<Swap> listSwaps = _swapRepository.findByCourseId(course);
 		List<SwapPreview> resList = new ArrayList<>();
-//		for(Swap xSwap : listSwaps) {
-//			
-//			resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
-//					xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(), xSwap.getCourseId().getCourseName(),
-//					xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
-//		}
+		for(Swap xSwap : listSwaps) {
+			resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
+					xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(), xSwap.getCourseId().getCourseName(),
+					xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
+		}
 		return resList;
 	}
 

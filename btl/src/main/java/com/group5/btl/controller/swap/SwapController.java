@@ -34,10 +34,9 @@ public class SwapController {
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/get/{id}")
 	public List<SwapPreview> getListSwapByCourseID(@PathVariable(name = "id") Integer courseId) {
-		List<SwapPreview> list = swapService.getByCourseId(courseId);
+//		List<SwapPreview> list = swapService.getByCourseId(courseId);
 //		return new PagingDto<SwapPreview>(1, list.size() / 3 + 1, list.subList(0,3));
-//		return swapService.getByCourseId(courseId);
-		return list;
+		return swapService.getByCourseId(courseId);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
