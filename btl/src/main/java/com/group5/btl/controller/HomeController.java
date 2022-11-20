@@ -10,6 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.group5.btl.dto.user.UserPreview;
+import com.group5.btl.model.Course;
+import com.group5.btl.model.Student;
+import com.group5.btl.model.Swap;
+import com.group5.btl.repository.UserRepository;
+import com.group5.btl.service.CourseService;
+import com.group5.btl.service.StudentService;
+import com.group5.btl.service.sector.SectorService;
+
+
+import com.group5.btl.service.SwapService;
+import com.group5.btl.service.SwapWishService;
 import com.group5.btl.service.UserSevice;
 
 @Controller
@@ -17,6 +28,12 @@ import com.group5.btl.service.UserSevice;
 public class HomeController {
 	@Autowired
 	private UserSevice userSevice;
+	
+	@Autowired
+	private StudentService studentService;
+	
+	@Autowired
+	private SwapWishService swapWishService;
 	
     @GetMapping()
     public String Index(Model model) {

@@ -30,4 +30,9 @@ public class SwapWishServiceImpl implements SwapWishService {
         return new SwapWishPreview(sw.getId(), sw.getCourseId().getStudyGroup(),sw.getCourseId().getPracticeGroup() , list);
     }
 
+	@Override
+	public void deleteSwapWishById(Integer id) {
+		_swr.deleteById(id);
+	}
+
 }
