@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.group5.btl.dto.PagingDto;
+import com.group5.btl.dto.course.CourseInfo;
 import com.group5.btl.dto.swap.SwapCreate;
 import com.group5.btl.dto.swap.SwapInfo;
 import com.group5.btl.dto.swap.SwapPreview;
 import com.group5.btl.dto.swap.SwapWishPreview;
+import com.group5.btl.model.Course;
 import com.group5.btl.model.Swap;
 import com.group5.btl.repository.SwapRepository;
+import com.group5.btl.service.CourseService;
 import com.group5.btl.service.SwapService;
 
 import lombok.experimental.var;
@@ -30,6 +33,22 @@ import java.util.*;
 public class SwapController {
 	@Autowired
 	private SwapService swapService;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@GetMapping("/{courseCode}/{studyGroup}/{practiceGroup}")
+	public List<SwapPreview> getSwapByCourse(@PathVariable(name = "courseCode") String courseCode,
+			@PathVariable(name = "studyGroup") Short studyGroup,
+			@PathVariable(name = "practiceGroup") Short practiceGroup) {
+		List<SwapPreview> listSwapPreviews = new ArrayList<>();
+		List<Course> list = courseService.getByCodeAndPracticeAndStudy(courseCode, practiceGroup, studyGroup);
+    	for(Course xCourse : list) {
+    		listSwapPreviews.addAll(swapService.getByCourseId(xCourse.getId()));
+    	}
+    	return listSwapPreviews;
+	}
 	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/get/{id}")

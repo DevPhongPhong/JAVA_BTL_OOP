@@ -31,16 +31,4 @@ public class CourseController {
 		return ResponseEntity.ok().body(course);
 	}
 	
-	@CrossOrigin(origins = "http://127.0.0.1:5500/")
-	@GetMapping("/{courseCode}/{studyGroup}/{practiceGroup}")
-	public List<CourseInfo> getCourse(@PathVariable(name = "courseCode") String courseCode,
-			@PathVariable(name = "studyGroup") Short studyGroup,
-			@PathVariable(name = "practiceGroup") Short practiceGroup) {
-		List<CourseInfo> res = new ArrayList<>();
-		List<Course> list = courseService.getByCodeAndPracticeAndStudy(courseCode, practiceGroup, studyGroup);
-    	for(Course xCourse : list) {
-    		res.add(new CourseInfo(xCourse.getId(), xCourse.getCourseCode(), xCourse.getCourseName(), xCourse.getStudyGroup(), xCourse.getPracticeGroup()));
-    	}
-    	return res;
-	}
 }
