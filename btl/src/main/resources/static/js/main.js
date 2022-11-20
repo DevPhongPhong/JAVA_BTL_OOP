@@ -249,7 +249,7 @@ function showSwapWishPreView(id) {
                         var checkJoined = false
                         listjoin = swapWishPreview.listJoinSwapPreview
 
-                        for (var i = 0; i < listjoin.length;) {
+                        for (var i = 0; i < listjoin.length;i++) {
                             if (listjoin[i].UserID == userId) {
                                 checkJoined = true;
                                 checkHas = true;
@@ -279,6 +279,7 @@ function showSwapWishPreView(id) {
                             for (var i = 0; i < list.length; ) {
                                 list[i].classList.add("joinSwap");
                                 list[i].classList.remove("disJoin");
+                                list = document.getElementsByClassName("disJoin");
                             }
                         }
                     }
