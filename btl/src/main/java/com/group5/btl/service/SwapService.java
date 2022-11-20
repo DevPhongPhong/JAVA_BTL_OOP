@@ -18,6 +18,8 @@ public interface SwapService {
     SwapInfo getInfo(Swap swap);
 
     List<SwapPreview> getPreviews(List<Swap> listSwap,int page, int size);
+    
+    List<SwapPreview> getByCourseId(Integer courseId);
 
     int create(SwapCreate swapCreateDTO);
 

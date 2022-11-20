@@ -5,6 +5,11 @@ $(document).ready(function () {
     $("body").on("click", "#search-course", function () {
         searchCourse();
     })
+    
+    $("body").on("click", ".get-swap", function () {
+		var courseId = $(this).parent().parent().data("course-id");
+        showSwapByCourseId(courseId);
+    })
 
     $("body").on("click", ".get-info", function () {
         var id = $(this).data('id');
@@ -88,15 +93,15 @@ function loadData(page) {
 
 function searchCourse() {
 	courseCode = $("#search-course-code")[0].value;
-	studyGroup = $("#search-study-group")[0].value === undefined ? 0 : $("#search-study-group")[0].value;
-	practiceGroup = $("#search-practice-group")[0].value === undefined ? 0 : $("#search-practice-group")[0].value;;
+	studyGroup = $("#search-study-group")[0].value === "" ? 0 : $("#search-study-group")[0].value;
+	practiceGroup = $("#search-practice-group")[0].value === "" ? 0 : $("#search-practice-group")[0].value;
 	$.ajax({
         url: `http://localhost:8080/course/${courseCode}/${studyGroup}/${practiceGroup}`,
         type: 'GET',
         success: function (rs) {
             ul_listSwapPreview = document.getElementById("ul_listSwapPreview")
             htmls = rs.map(function(course) {
-				return `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" id="swapId-` + course.id + `">
+				return `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-course-id="${course.courseId}">
                 \n\t\t\t\t\t\t\t\t\t<ul class="list">
                 \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Mã môn học: `+ course.courseCode + `</li>
                 \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Tên môn học môn học: `+ course.courseName + `</li>
@@ -105,7 +110,7 @@ function searchCourse() {
                 \n\t\t\t\t\t\t\t\t\t</ul>
                 \n\t\t\t\t\t\t\t\t\t<br />
                 \n\t\t\t\t\t\t\t\t\t<div class="row">
-                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ course.id + `>Thông tin</a>
+                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-swap" type="button" data-id=`+ course.id + `>Thông tin</a>
                 \n\t\t\t\t\t\t\t\t\t</div>
                 \n\t\t\t\t\t\t\t\t</li>`;
 			})
@@ -113,6 +118,17 @@ function searchCourse() {
         }
     })
 }
+
+function showSwapByCourseId(courseId) {
+	$.ajax({
+        url: `http://localhost:8080/swap/${courseId}`,
+        type: 'GET',
+        success: function (rs) {
+            console.log(rs)
+        }
+    })
+}
+
 
 function showUserPreview(id) {
     $.ajax({

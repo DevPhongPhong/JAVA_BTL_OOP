@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.group5.btl.dto.user.UserPreview;
+import com.group5.btl.model.Course;
 import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
 import com.group5.btl.repository.UserRepository;

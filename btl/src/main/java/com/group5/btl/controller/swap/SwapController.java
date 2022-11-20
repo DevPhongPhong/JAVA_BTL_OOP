@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.group5.btl.dto.PagingDto;
 import com.group5.btl.dto.swap.SwapCreate;
+import com.group5.btl.dto.swap.SwapInfo;
 import com.group5.btl.dto.swap.SwapPreview;
+import com.group5.btl.dto.swap.SwapWishPreview;
 import com.group5.btl.model.Swap;
 import com.group5.btl.repository.SwapRepository;
 import com.group5.btl.service.SwapService;
+
+import lombok.experimental.var;
 
 import java.util.*;
 
@@ -26,6 +30,15 @@ import java.util.*;
 public class SwapController {
 	@Autowired
 	private SwapService swapService;
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@GetMapping("/get/{id}")
+	public List<SwapPreview> getListSwapByCourseID(@PathVariable(name = "id") Integer courseId) {
+		List<SwapPreview> list = swapService.getByCourseId(courseId);
+//		return new PagingDto<SwapPreview>(1, list.size() / 3 + 1, list.subList(0,3));
+//		return swapService.getByCourseId(courseId);
+		return list;
+	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping
