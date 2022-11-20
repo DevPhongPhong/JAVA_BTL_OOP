@@ -36,6 +36,9 @@ public class SwapServiceImpl implements SwapService {
     private JoinSwapRepository _joinSwapRepository;
     @Autowired
     private SwapWishService _sws;
+    
+    @Autowired
+    private CourseService courseService;
 
     // #region Private Method
     private void sortByCreatedDate(String type, List<Swap> listSwap) throws Exception {
@@ -184,5 +187,18 @@ public class SwapServiceImpl implements SwapService {
         return res;
     }
     // #endregion
+
+	@Override
+	public List<SwapPreview> getByCourseId(Integer courseId) {
+		Course course = courseService.getById(courseId);
+		List<Swap> listSwaps = _swapRepository.findByCourseId(course);
+		List<SwapPreview> resList = new ArrayList<>();
+		for(Swap xSwap : listSwaps) {
+			resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
+					xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(), xSwap.getCourseId().getCourseName(),
+					xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
+		}
+		return resList;
+	}
 
 }

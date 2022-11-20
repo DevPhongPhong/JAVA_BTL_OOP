@@ -60,8 +60,9 @@ public class SecurityConfig{
 											"/scss/**",
 											"/").permitAll()
 			.antMatchers("/user/get/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/swap").permitAll()
+			.antMatchers(HttpMethod.GET, "/swap/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/swapwish/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/course/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

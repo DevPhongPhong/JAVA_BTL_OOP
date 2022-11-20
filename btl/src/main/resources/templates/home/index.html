@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -48,8 +48,25 @@
 			</ul>
 		</div>
 	</nav>
-	</div>
 	<div class="container">
+		<div class="row mt-4">
+            <form>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Mã môn học" name="" id="search-course-code">
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Nhóm môn học" name="" id="search-study-group">
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Nhóm thực hành" name="" id="search-practice-group">
+                  </div>
+                  <button type="button" class="btn btn-primary col-1" id="search-course">
+                    <span>Tìm kiếm</span>
+                  </button>
+                </div>
+            </form>
+        </div>
 		<div class="row">
 			<div class="col-4 pt-5">
 				<div class="">
