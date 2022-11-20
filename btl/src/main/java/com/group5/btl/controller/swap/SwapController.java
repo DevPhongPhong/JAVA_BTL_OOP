@@ -38,10 +38,10 @@ import java.util.*;
 public class SwapController {
 	@Autowired
 	private SwapService swapService;
-	
+
 	@Autowired
 	private CourseService courseService;
-	
+
 	@Autowired
 	private CourseService _cs;
 
@@ -51,7 +51,7 @@ public class SwapController {
 	@Autowired
 	private StudentService studentService;
 	
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/{courseCode}/{studyGroup}/{practiceGroup}")
 	public List<SwapPreview> getSwapByCourse(@PathVariable(name = "courseCode") String courseCode,
@@ -59,17 +59,17 @@ public class SwapController {
 			@PathVariable(name = "practiceGroup") Short practiceGroup) {
 		List<SwapPreview> listSwapPreviews = new ArrayList<>();
 		List<Course> list = courseService.getByCodeAndPracticeAndStudy(courseCode, practiceGroup, studyGroup);
-    	for(Course xCourse : list) {
-    		listSwapPreviews.addAll(swapService.getByCourseId(xCourse.getId()));
-    	}
-    	return listSwapPreviews;
+		for (Course xCourse : list) {
+			listSwapPreviews.addAll(swapService.getByCourseId(xCourse.getId()));
+		}
+		return listSwapPreviews;
 	}
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/get/{id}")
 	public List<SwapPreview> getListSwapByCourseID(@PathVariable(name = "id") Integer courseId) {
-//		List<SwapPreview> list = swapService.getByCourseId(courseId);
-//		return new PagingDto<SwapPreview>(1, list.size() / 3 + 1, list.subList(0,3));
+		// List<SwapPreview> list = swapService.getByCourseId(courseId);
+		// return new PagingDto<SwapPreview>(1, list.size() / 3 + 1, list.subList(0,3));
 		return swapService.getByCourseId(courseId);
 	}
 
@@ -94,10 +94,38 @@ public class SwapController {
 	public ResponseEntity addSwap(@RequestBody SwapCreateFromView swapCreateFromView) {
 		var swapCreate = new SwapCreate(0, 0, new ArrayList<Integer>());
 		var list = new ArrayList<Integer>();
-		swapCreate.setCourseId(_cs.getByCodeAndPracticeAndStudy(swapCreateFromView.getCourseCode(),
-				swapCreateFromView.getGroupSwap().getPracticeGroup(),
-				swapCreateFromView.getGroupSwap().getPracticeGroup())
-				.get(0).getId());
+		int temp1=0;
+		int temp2=0;
+		try {
+			temp1 = swapCreateFromView.getGroupSwap().getPracticeGroup();
+			temp2 = swapCreateFromView.getGroupSwap().getStudyGroup();
+
+			swapCreate.setCourseId(_cs.getByCodeAndPracticeAndStudy(swapCreateFromView.getCourseCode(),
+					swapCreateFromView.getGroupSwap().getPracticeGroup(),
+					swapCreateFromView.getGroupSwap().getStudyGroup())
+					.get(0).getId());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest()
+					.body("Không tim thầy môn có mã: " + swapCreateFromView.getCourseCode() + ", nhóm học: "
+							+ temp2 + ", nhóm thực hành: "
+							+ temp1);
+		}
+		try {
+			for (var item : swapCreateFromView.getSwapWish()) {
+				temp1 = item.getPracticeGroup();
+				temp2 = item.getStudyGroup();
+
+				list.add(_cs.getByCodeAndPracticeAndStudy(swapCreateFromView.getCourseCode(),
+						item.getPracticeGroup(),
+						item.getStudyGroup())
+						.get(0).getId());
+			}
+		} catch (Exception e) {
+			return ResponseEntity.badRequest()
+					.body("Không tim thầy môn có mã: " + swapCreateFromView.getCourseCode() + ", nhóm học: "
+							+ temp2 + ", nhóm thực hành: "
+							+ temp1);
+		}
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken)
@@ -105,8 +133,9 @@ public class SwapController {
 
 		String userName = authentication.getName();
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
-		
+
 		swapCreate.setUserId(userPreview.getId());
+		swapCreate.setListCourseWishID(list);
 		swapService.create(swapCreate);
 		return ResponseEntity.ok().body(swapCreate);
 	}
