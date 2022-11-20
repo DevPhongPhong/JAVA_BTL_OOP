@@ -149,7 +149,7 @@ function showSwapWishPreView(id) {
                             \n\t\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: 
                             \n\t\t\t\t\t\t\t\t\t\t\t<span id="countJoin-`+ swapWishPreview.ID + `">` + swapWishPreview.listJoinSwapPreview.length + `</span></div>
-                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + (checkJoined ? `outline-danger float-right outJoin">Hủy` : `danger float-right `+(checkHas?"disJoin":"joinSwap")+`">Tham gia`) + `</button></div>
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + (checkJoined ? `outline-danger float-right outJoin">Hủy` : `danger float-right ` + (checkHas ? "disJoin" : "joinSwap") + `">Tham gia`) + `</button></div>
                             \n\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t</li>`;
                         ul_swapInfo.innerHTML += htmlString;
@@ -175,7 +175,19 @@ function createJoinSwap(swapWishId, element) {
         data: JSON.stringify(formData)
     }).done(function (res) {
         var count = document.getElementById("countJoin-" + res.swapWishId);
-        count.innerHTML = parseInt(count.innerHTML) + 1
+        count.innerHTML = parseInt(count.innerHTML) + 1;
+
+        element.classList.add("outJoin");
+        element.classList.add("btn-outline-danger");
+        element.classList.remove("joinSwap");
+        element.classList.remove("btn-danger");
+        element.innerHTML = "Hủy"
+
+        var listJoinSwap = document.getElementsByClassName("joinSwap");
+        for (var i = 0; i < listJoinSwap.length; i++) {
+            listJoinSwap[i].classList.add("disJoin");
+            listJoinSwap[i].classList.remove("joinSwap");
+        }
     })
 }
 
@@ -190,6 +202,24 @@ function deleteSwap() {
 }
 
 function deleteJoinSwap(swapWishId) {
+    var thisBtn = document.getElementsByClassName("outJoin")[0];
+    var listBlockedBtn = document.getElementsByClassName("disJoin");
+
+    var count = document.getElementById("countJoin-"+swapWishId);
+    count.innerHTML = parseInt(count.innerHTML)-1;
+
+    thisBtn.classList.add("joinSwap");
+    thisBtn.classList.add("btn-danger");
+    thisBtn.classList.remove("outJoin");
+    thisBtn.classList.remove("btn-outline-danger");
+    
+    thisBtn.innerHTML = "Tham gia"
+
+    for (var i = 0; i < listBlockedBtn.length; i++) {
+        listBlockedBtn[i].classList.add("joinSwap");
+        listBlockedBtn[i].classList.remove("disJoin");
+    }
+
     $.ajax({
         url: "http://localhost:8080/swapwish/delete/1",
         type: "DELETE",
