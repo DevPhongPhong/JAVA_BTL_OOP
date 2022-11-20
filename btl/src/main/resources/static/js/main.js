@@ -1,20 +1,15 @@
 $(document).ready(function () {
 
     loadData();
-
-    $("#get-user").click(function () {
-        showUserPreview(1);
-    })
-
-    $("#create-swap").click(function () {
-        createSwap();
+    
+    $("body").on("click", "#search-course", function () {
+        searchCourse();
     })
 
     $("body").on("click", ".get-info", function () {
         var id = $(this).data('id');
         showSwapWishPreView(id);
     })
-<<<<<<< HEAD
 	
 	$("body").on("click", ".get-info", function() {
 		var hasBubble = $(".bubble")
@@ -23,14 +18,12 @@ $(document).ready(function () {
 		}
 		$(this).parent().parent().addClass("bubble")
 	})
-=======
 
     $("body").on("click", ".paginbtn", function () {
         var page = $(this).data('page');
         loadData(page);
     })
 
->>>>>>> 219e63731508c3a658074e84d6fb20d2cccb6b81
 });
 
 function loadData(page) {
@@ -43,7 +36,6 @@ function loadData(page) {
             countPage = res.countPage
             pageNow = res.page
             ul_listSwapPreview = document.getElementById("ul_listSwapPreview")
-<<<<<<< HEAD
             swaps.map(function (swap) {
                 var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" id="swapId-` + swap.id + `">
                 \n\t\t\t\t\t\t\t\t\t<ul class="list">
@@ -59,7 +51,7 @@ function loadData(page) {
                 \n\t\t\t\t\t\t\t\t\t</div>
                 \n\t\t\t\t\t\t\t\t</li>`;
                 ul_listSwapPreview.innerHTML += htmlString;
-=======
+            })
             $("#ul_listSwapPreview").fadeOut(() => {
                 if (swaps == undefined) ul_listSwapPreview.innerHTML = 'Không có dữ liệu'
                 ul_listSwapPreview.innerHTML = ''
@@ -79,7 +71,6 @@ function loadData(page) {
                     \n\t\t\t\t\t\t\t\t</li>`;
                     ul_listSwapPreview.innerHTML += htmlString;
                 })
->>>>>>> 219e63731508c3a658074e84d6fb20d2cccb6b81
             })
             $("#ul_listSwapPreview").fadeIn();
 
@@ -91,6 +82,34 @@ function loadData(page) {
                 \n\t\t\t\t\t\t\t\t\t<button class="btn btn`+ (pageNow == i ? '' : '-outline') + `-danger paginbtn" data-page=` + i + `>` + i + `</button>
                 \n\t\t\t\t\t\t\t\t</div>`
             }
+        }
+    })
+}
+
+function searchCourse() {
+	courseCode = $("#search-course-code")[0].value;
+	studyGroup = $("#search-study-group")[0].value === undefined ? 0 : $("#search-study-group")[0].value;
+	practiceGroup = $("#search-practice-group")[0].value === undefined ? 0 : $("#search-practice-group")[0].value;;
+	$.ajax({
+        url: `http://localhost:8080/course/${courseCode}/${studyGroup}/${practiceGroup}`,
+        type: 'GET',
+        success: function (rs) {
+            ul_listSwapPreview = document.getElementById("ul_listSwapPreview")
+            htmls = rs.map(function(course) {
+				return `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" id="swapId-` + course.id + `">
+                \n\t\t\t\t\t\t\t\t\t<ul class="list">
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Mã môn học: `+ course.courseCode + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Tên môn học môn học: `+ course.courseName + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm môn học: `+ course.studyGroup + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm thực hành: `+ course.practiceGroup + `</li>
+                \n\t\t\t\t\t\t\t\t\t</ul>
+                \n\t\t\t\t\t\t\t\t\t<br />
+                \n\t\t\t\t\t\t\t\t\t<div class="row">
+                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ course.id + `>Thông tin</a>
+                \n\t\t\t\t\t\t\t\t\t</div>
+                \n\t\t\t\t\t\t\t\t</li>`;
+			})
+			ul_listSwapPreview.innerHTML = htmls.join("");
         }
     })
 }

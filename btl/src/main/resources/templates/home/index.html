@@ -23,25 +23,48 @@
 </head>
 
 <body>
-	<nav class="navbar sticky-top navbar-light bg-light">
-		<div class="container">
-			<img src="https://code.ptit.edu.vn/2020/images/logo_ptit.png" alt="Logo" class="logo_ptit" width="80"
-				height="80">
-			<ul class="nav justify-content-end">
-				<li th:if="!${#request.userPrincipal}" class="nav-item">
-					<a class="btn btn-outline-danger" th:href="@{/login}">Đăng nhập</a>
-				</li>
-				<li sec:authorize="isAuthenticated()" class="nav-item">
-					<div th:object="${user}">
-						<button type="button" class="btn btn-danger" th:text="${user.username}"></button>
-						<a th:href="@{/logout}" class="btn btn-outline-danger">Đăng xuất</a>
-					</div>
-				</li>
-			</ul>
-		</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <div class="container">
+	  	<img src="https://code.ptit.edu.vn/2020/images/logo_ptit.png" alt="Logo" class="logo_ptit" width="60"
+				height="60">
+	    <div class="collapse navbar-collapse">
+	      <div class="navbar-nav">
+	        <a class="nav-link active" aria-current="page" href="#">Home</a>
+	        <a class="nav-link" th:href="@{/taoswap}">Tao Swap</a>
+	      </div>
+	    </div>
+	    <ul class="nav justify-content-end">
+			<li th:if="!${#request.userPrincipal}" class="nav-item">
+				<a class="btn btn-outline-danger" th:href="@{/login}">Đăng nhập</a>
+			</li>
+			<li sec:authorize="isAuthenticated()" class="nav-item">
+				<div th:object="${user}">
+					<button type="button" class="btn btn-danger" th:text="${user.username}"></button>
+					<a th:href="@{/logout}" class="btn btn-outline-danger">Đăng xuất</a>
+				</div>
+			</li>
+		</ul>
+	  </div>
 	</nav>
-	</div>
 	<div class="container">
+		<div class="row mt-4">
+            <form>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Mã môn học" name="" id="search-course-code">
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Nhóm môn học" name="" id="search-study-group">
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Nhóm thực hành" name="" id="search-practice-group">
+                  </div>
+                  <button type="button" class="btn btn-primary col-1" id="search-course">
+                    <span>Tìm kiếm</span>
+                  </button>
+                </div>
+            </form>
+        </div>
 		<div class="row">
 			<div class="col-4 pt-5">
 				<div class="">

@@ -31,16 +31,16 @@ public class SwapController {
 	@GetMapping
 	public PagingDto<SwapPreview> getListSwap() {
 		var list = swapService.getAll();
-		var res = swapService.getPreviews(list, 1, 5);
-		return new PagingDto<SwapPreview>(1, list.size() / 5 + 1, res);
+		var res = swapService.getPreviews(list, 1, 3);
+		return new PagingDto<SwapPreview>(1, list.size() / 3 + 1, res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/{page}")
 	public PagingDto<SwapPreview> getListSwap(@PathVariable(name = "page")int page) {
 		var list = swapService.getAll();
-		var res = swapService.getPreviews(list, page, 5);
-		return new PagingDto<SwapPreview>(page, list.size() / 5 + 1, res);
+		var res = swapService.getPreviews(list, page, 3);
+		return new PagingDto<SwapPreview>(page, list.size() / 3 + 1, res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
