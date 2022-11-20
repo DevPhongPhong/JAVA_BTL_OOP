@@ -58,7 +58,7 @@ public class SecurityConfig{
 											"/images/**",
 											"/fonts/**",
 											"/scss/**",
-											"/home").permitAll()
+											"/").permitAll()
 			.antMatchers("/user/get/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/swap").permitAll()
 			.antMatchers(HttpMethod.GET, "/swapwish/**").permitAll()
@@ -66,7 +66,7 @@ public class SecurityConfig{
 			.and()
 			.formLogin()
 			.loginPage("/login")
-			.defaultSuccessUrl("/home")
+			.defaultSuccessUrl("/")
 			.permitAll()
 			.and()
 			.logout()

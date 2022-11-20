@@ -21,9 +21,26 @@ $(document).ready(function () {
     })
 
     $("body").on("click", ".joinSwap", function () {
-        var id = $(this).data('id');
-        createJoinSwap(id, this);
-        document.getElementById("modal-body").innerHTML = 'Tham gia đổi môn thành công!'
+        if (userId >= 1) {
+            var id = $(this).data('id');
+            createJoinSwap(id, this);
+            document.getElementById("modal-body").innerHTML = 'Tham gia đổi môn thành công!'
+
+            $('#exampleModal').modal('show');
+            $('#exampleModal').on("click", ".close", () => {
+                $('#exampleModal').modal('hide')
+            })
+        }
+        else {
+            window.location.href = "/login"
+        }
+    })
+
+    $("body").on("click", ".outJoin", function () {
+        document.getElementById("modal-body").innerHTML = 'Hủy tham gia thành công!'
+
+        var id = $(this).data("id")
+        deleteJoinSwap(id);
 
         $('#exampleModal').modal('show');
         $('#exampleModal').on("click", ".close", () => {
@@ -31,9 +48,13 @@ $(document).ready(function () {
         })
     })
 
-    $("body").on("click", ".outJoin", function () {
-        var id = $(this).data("id")
-        deleteJoinSwap(id);
+    $("body").on("click", ".disJoin", function () {
+        document.getElementById("modal-body").innerHTML = 'Hãy hủy tham gia nhóm môn bạn đã chọn trước khi tham gia nhóm môn khác!'
+
+        $('#exampleModal').modal('show');
+        $('#exampleModal').on("click", ".close", () => {
+            $('#exampleModal').modal('hide')
+        })
     })
 
 });
@@ -205,14 +226,14 @@ function deleteJoinSwap(swapWishId) {
     var thisBtn = document.getElementsByClassName("outJoin")[0];
     var listBlockedBtn = document.getElementsByClassName("disJoin");
 
-    var count = document.getElementById("countJoin-"+swapWishId);
-    count.innerHTML = parseInt(count.innerHTML)-1;
+    var count = document.getElementById("countJoin-" + swapWishId);
+    count.innerHTML = parseInt(count.innerHTML) - 1;
 
     thisBtn.classList.add("joinSwap");
     thisBtn.classList.add("btn-danger");
     thisBtn.classList.remove("outJoin");
     thisBtn.classList.remove("btn-outline-danger");
-    
+
     thisBtn.innerHTML = "Tham gia"
 
     for (var i = 0; i < listBlockedBtn.length; i++) {
