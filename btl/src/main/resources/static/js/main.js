@@ -20,7 +20,25 @@ $(document).ready(function () {
         loadData(page);
     })
 
+    $("body").on("click", ".joinSwap", function () {
+        var id = $(this).data('id');
+        createJoinSwap(id, this);
+        document.getElementById("modal-body").innerHTML = 'Tham gia đổi môn thành công!'
+
+        $('#exampleModal').modal('show');
+        $('#exampleModal').on("click", ".close", () => {
+            $('#exampleModal').modal('hide')
+        })
+    })
+
+    $("body").on("click", ".outJoin", function () {
+        var id = $(this).data("id")
+        deleteJoinSwap(id);
+    })
+
 });
+const userId = parseInt($("#userbutton").attr("data-id"));
+
 
 function loadData(page) {
     console.log('http://localhost:8080/swap' + (page != undefined ? '/' + page : ''));
@@ -107,20 +125,33 @@ function showSwapWishPreView(id) {
                 if (swapWishPreviews.length == 0) ul_swapInfo.innerHTML = 'Không có dữ liệu'
                 else {
                     ul_swapInfo.innerHTML = ''
+                    var checkHas = false
                     swapWishPreviews.map(function (swapWishPreview) {
+                        var checkJoined = false
+                        listjoin = swapWishPreview.listJoinSwapPreview
+
+                        for (var i = 0; i < listjoin.length; i++) {
+                            if (listjoin[i].UserID == userId) {
+                                checkJoined = true;
+                                checkHas = true;
+                                break;
+                            }
+                        }
+
                         var htmlString = `
-                    \n\t\t\t\t\t\t\t\t<li class="list-group-item">
-                    \n\t\t\t\t\t\t\t\t\t<div class="row">
-                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">
-                    \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list">
-                    \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm học: `+ swapWishPreview.studyGroup + `</li>
-                    \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm thực hành: `+ swapWishPreview.practiceGroup + `</li>
-                    \n\t\t\t\t\t\t\t\t\t\t\t</ul>
-                    \n\t\t\t\t\t\t\t\t\t\t</div>
-                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: `+swapWishPreview.listJoinSwapPreview.length+`</div>
-                    \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><a href="`+swapWishPreview.ID+`" class="btn btn-danger float-right">Tham gia</a></div>
-                    \n\t\t\t\t\t\t\t\t\t</div>
-                    \n\t\t\t\t\t\t\t\t</li>`;
+                            \n\t\t\t\t\t\t\t\t<li class="list-group-item">
+                            \n\t\t\t\t\t\t\t\t\t<div class="row">
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">
+                            \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list">
+                            \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm học: `+ swapWishPreview.studyGroup + `</li>
+                            \n\t\t\t\t\t\t\t\t\t\t\t\t<li>Nhóm thực hành: `+ swapWishPreview.practiceGroup + `</li>
+                            \n\t\t\t\t\t\t\t\t\t\t\t</ul>
+                            \n\t\t\t\t\t\t\t\t\t\t</div>
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: 
+                            \n\t\t\t\t\t\t\t\t\t\t\t<span id="countJoin-`+ swapWishPreview.ID + `">` + swapWishPreview.listJoinSwapPreview.length + `</span></div>
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + (checkJoined ? `outline-danger float-right outJoin">Hủy` : `danger float-right `+(checkHas?"disJoin":"joinSwap")+`">Tham gia`) + `</button></div>
+                            \n\t\t\t\t\t\t\t\t\t</div>
+                            \n\t\t\t\t\t\t\t\t</li>`;
                         ul_swapInfo.innerHTML += htmlString;
                     })
                 }
@@ -131,10 +162,10 @@ function showSwapWishPreView(id) {
     })
 }
 
-function createJoinSwap() {
+function createJoinSwap(swapWishId, element) {
     var formData = {
         userId: 1,
-        swapWishId: 9
+        swapWishId: swapWishId
     }
 
     $.ajax({
@@ -142,8 +173,9 @@ function createJoinSwap() {
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(formData)
-    }).done(function (ketqua) {
-        console.log("done")
+    }).done(function (res) {
+        var count = document.getElementById("countJoin-" + res.swapWishId);
+        count.innerHTML = parseInt(count.innerHTML) + 1
     })
 }
 
@@ -157,7 +189,7 @@ function deleteSwap() {
     })
 }
 
-function deleteJoinSwap() {
+function deleteJoinSwap(swapWishId) {
     $.ajax({
         url: "http://localhost:8080/swapwish/delete/1",
         type: "DELETE",

@@ -2,6 +2,9 @@ package com.group5.btl.controller.swap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import com.group5.btl.dto.swap.JoinSwapCreate;
 import com.group5.btl.dto.swap.SwapCreate;
 import com.group5.btl.dto.swap.SwapInfo;
 import com.group5.btl.dto.swap.SwapWishPreview;
+import com.group5.btl.dto.user.UserPreview;
 import com.group5.btl.model.JoinSwap;
 import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
@@ -23,6 +27,7 @@ import com.group5.btl.service.JoinSwapService;
 import com.group5.btl.service.StudentService;
 import com.group5.btl.service.SwapService;
 import com.group5.btl.service.SwapWishService;
+import com.group5.btl.service.UserSevice;
 
 import java.util.*;
 
@@ -42,6 +47,9 @@ public class SwapWishController {
 	@Autowired
 	private SwapWishService swapWishService;
 	
+	@Autowired
+	private UserSevice _us;
+	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/{id}")
 	public List<SwapWishPreview> getListSwapWish(@PathVariable(name = "id") Integer swapId) {
@@ -53,9 +61,19 @@ public class SwapWishController {
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/join")
 	public ResponseEntity joinSwap(@RequestBody JoinSwapCreate joinSwap) {
-		Student student = studentService.GetById(joinSwap.getUserId());
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken)
+			return null;
+
+		String userName = authentication.getName();
+		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
+		
+
+		Student student = studentService.GetById(userPreview.getId());
 		SwapWish swapWish = swapWishService.GetSwapWishByID(joinSwap.getSwapWishId());
 		joinSwapService.CreateJoinSwap(swapWish, student);
+		joinSwap.setUserId(student.getId());
 		return ResponseEntity.ok().body(joinSwap);
 	}
 	

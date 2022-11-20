@@ -11,13 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.group5.btl.dto.PagingDto;
 import com.group5.btl.dto.swap.SwapCreate;
+import com.group5.btl.dto.swap.SwapCreateFromView;
 import com.group5.btl.dto.swap.SwapPreview;
+import com.group5.btl.dto.user.UserPreview;
 import com.group5.btl.model.Swap;
 import com.group5.btl.repository.SwapRepository;
+import com.group5.btl.service.CourseService;
 import com.group5.btl.service.SwapService;
+import com.group5.btl.service.UserSevice;
 
 import java.util.*;
 
@@ -26,6 +33,12 @@ import java.util.*;
 public class SwapController {
 	@Autowired
 	private SwapService swapService;
+
+	@Autowired
+	private CourseService _cs;
+
+	@Autowired
+	private UserSevice _us;
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping
@@ -37,7 +50,7 @@ public class SwapController {
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/{page}")
-	public PagingDto<SwapPreview> getListSwap(@PathVariable(name = "page")int page) {
+	public PagingDto<SwapPreview> getListSwap(@PathVariable(name = "page") int page) {
 		var list = swapService.getAll();
 		var res = swapService.getPreviews(list, page, 5);
 		return new PagingDto<SwapPreview>(page, list.size() / 5 + 1, res);
@@ -45,7 +58,22 @@ public class SwapController {
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/add")
-	public ResponseEntity addSwap(@RequestBody SwapCreate swapCreate) {
+	public ResponseEntity addSwap(@RequestBody SwapCreateFromView swapCreateFromView) {
+		var swapCreate = new SwapCreate(0, 0, new ArrayList<Integer>());
+		var list = new ArrayList<Integer>();
+		swapCreate.setCourseId(_cs.getByCodeAndPracticeAndStudy(swapCreateFromView.getCourseCode(),
+				swapCreateFromView.getGroupSwap().getPracticeGroup(),
+				swapCreateFromView.getGroupSwap().getPracticeGroup())
+				.get(0).getId());
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken)
+			return null;
+
+		String userName = authentication.getName();
+		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
+		
+		swapCreate.setUserId(userPreview.getId());
 		swapService.create(swapCreate);
 		return ResponseEntity.ok().body(swapCreate);
 	}
