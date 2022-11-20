@@ -25,6 +25,7 @@ import com.group5.btl.service.sector.SectorService;
 
 
 import com.group5.btl.service.SwapService;
+import com.group5.btl.service.SwapWishService;
 import com.group5.btl.service.UserSevice;
 
 @Controller
@@ -41,6 +42,9 @@ public class HomeController {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private SwapWishService swapWishService;
 	
     @GetMapping()
     public String Index(Model model) {

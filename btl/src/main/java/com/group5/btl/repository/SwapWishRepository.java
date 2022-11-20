@@ -7,5 +7,5 @@ import com.group5.btl.model.SwapWish;
 
 @Repository
 public interface SwapWishRepository extends JpaRepository<SwapWish,Integer>{
-    
+    void deleteById(Integer id);
 }

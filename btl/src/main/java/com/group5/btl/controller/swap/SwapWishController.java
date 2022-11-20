@@ -60,6 +60,13 @@ public class SwapWishController {
 	}
 	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@DeleteMapping("/deleteswapwish/{id}")
+	public ResponseEntity deleteSwapWish(@PathVariable(name="id") Integer swapWishId) {
+		swapWishService.deleteSwapWishById(swapWishId);
+		return ResponseEntity.ok().build();
+	}
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity deleteJoinSwap(@PathVariable(name="id") Integer swapWishId) {
 		joinSwapService.DeleteJoinSwap(joinSwapService.GetByID(swapWishId));
