@@ -6,6 +6,7 @@ import com.group5.btl.dto.swap.SwapCreate;
 import com.group5.btl.dto.swap.SwapInfo;
 import com.group5.btl.dto.swap.SwapPreview;
 import com.group5.btl.dto.swap.SwapUpdate;
+import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
 
 public interface SwapService {
@@ -20,6 +21,8 @@ public interface SwapService {
     List<SwapPreview> getPreviews(List<Swap> listSwap,int page, int size);
     
     List<SwapPreview> getByCourseId(Integer courseId);
+    
+    List<SwapPreview> getByUserId(Student student);
 
     int create(SwapCreate swapCreateDTO);
 

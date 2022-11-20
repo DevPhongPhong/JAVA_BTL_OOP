@@ -21,9 +21,11 @@ import com.group5.btl.dto.swap.SwapCreateFromView;
 import com.group5.btl.dto.swap.SwapPreview;
 import com.group5.btl.dto.swap.SwapWishPreview;
 import com.group5.btl.model.Course;
+import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
 import com.group5.btl.repository.SwapRepository;
 import com.group5.btl.service.CourseService;
+import com.group5.btl.service.StudentService;
 import com.group5.btl.dto.user.UserPreview;
 import com.group5.btl.service.CourseService;
 import com.group5.btl.service.SwapService;
@@ -45,7 +47,11 @@ public class SwapController {
 
 	@Autowired
 	private UserSevice _us;
-
+	
+	@Autowired
+	private StudentService studentService;
+	
+	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/{courseCode}/{studyGroup}/{practiceGroup}")
 	public List<SwapPreview> getSwapByCourse(@PathVariable(name = "courseCode") String courseCode,
@@ -139,5 +145,14 @@ public class SwapController {
 	public ResponseEntity deleteSwap(@PathVariable(name = "id") Integer swapId) {
 		int res = swapService.delete(swapId);
 		return ResponseEntity.ok().build();
+	}
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@GetMapping("/manage")
+	public List<SwapPreview> getListSwapByUserID() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+		Student student = studentService.findByEmail(userName);
+		return swapService.getByUserId(student);
 	}
 }

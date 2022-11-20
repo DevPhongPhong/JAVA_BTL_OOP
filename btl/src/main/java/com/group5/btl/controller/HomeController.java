@@ -73,15 +73,41 @@ public class HomeController {
 		return "home/create";
 	}
 
-	@GetMapping("/danh-sach-yeu-cau")
+	@GetMapping("danh-sach-tham-gia")
 	public String ListSwap(Model model) {
-
-		return "home/create";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken) {
+			HashMap<String, String> user = new HashMap<>();
+			user.put("username", "anonymousUser");
+			user.put("id", "-1");
+			model.addAttribute("user", user);
+		} else {
+			String userName = authentication.getName();
+			UserPreview userPreview = userSevice.getUserPreviewByEmail(userName);
+			HashMap<String, String> user = new HashMap<>();
+			user.put("username", userPreview.getName());
+			user.put("id", String.valueOf(userPreview.getId()));
+			model.addAttribute("user", user);
+		}
+		return "swap/managejoinswap";
 	}
 
-	@GetMapping("/danh-sach-tham-gia")
+	@GetMapping("danh-sach-yeu-cau")
 	public String ListJoinSwap(Model model) {
-
-		return "home/create";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken) {
+			HashMap<String, String> user = new HashMap<>();
+			user.put("username", "anonymousUser");
+			user.put("id", "-1");
+			model.addAttribute("user", user);
+		} else {
+			String userName = authentication.getName();
+			UserPreview userPreview = userSevice.getUserPreviewByEmail(userName);
+			HashMap<String, String> user = new HashMap<>();
+			user.put("username", userPreview.getName());
+			user.put("id", String.valueOf(userPreview.getId()));
+			model.addAttribute("user", user);
+		}
+		return "swap/manageswap";
 	}
 }
