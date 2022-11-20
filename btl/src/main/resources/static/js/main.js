@@ -224,15 +224,6 @@ function showUserPreview(id) {
 }
 
 function createSwap() {
-    courseId = $("#courseid")[0].value;
-    listCourseWishID = [$("#wishid")[0].value];
-
-    var formData = {
-        courseId: courseId,
-        userId: 0,
-        listCourseWishID: listCourseWishID
-    }
-
     $.ajax({
         url: "http://localhost:8080/swap/add",
         type: 'POST',
