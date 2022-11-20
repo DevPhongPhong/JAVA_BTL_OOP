@@ -1,13 +1,13 @@
 $(document).ready(function () {
 
     loadData();
-    
+
     $("body").on("click", "#search-course", function () {
         searchCourse();
     })
-    
+
     $("body").on("click", ".get-swap", function () {
-		var courseId = $(this).parent().parent().data("course-id");
+        var courseId = $(this).parent().parent().data("course-id");
         showSwapByCourseId(courseId);
     })
 
@@ -15,14 +15,14 @@ $(document).ready(function () {
         var id = $(this).data('id');
         showSwapWishPreView(id);
     })
-	
-	$("body").on("click", ".get-info", function() {
-		var hasBubble = $(".bubble")
-		if(hasBubble.length > 0) {
-			hasBubble.removeClass("bubble")
-		}
-		$(this).parent().parent().addClass("bubble")
-	})
+
+    $("body").on("click", ".get-info", function () {
+        var hasBubble = $(".bubble")
+        if (hasBubble.length > 0) {
+            hasBubble.removeClass("bubble")
+        }
+        $(this).parent().parent().addClass("bubble")
+    })
 
     $("body").on("click", ".paginbtn", function () {
         var page = $(this).data('page');
@@ -131,16 +131,16 @@ function loadData(page) {
 }
 
 function searchCourse() {
-	courseCode = $("#search-course-code")[0].value;
-	studyGroup = $("#search-study-group")[0].value === "" ? 0 : $("#search-study-group")[0].value;
-	practiceGroup = $("#search-practice-group")[0].value === "" ? 0 : $("#search-practice-group")[0].value;
-	$.ajax({
+    courseCode = $("#search-course-code")[0].value;
+    studyGroup = $("#search-study-group")[0].value === "" ? 0 : $("#search-study-group")[0].value;
+    practiceGroup = $("#search-practice-group")[0].value === "" ? 0 : $("#search-practice-group")[0].value;
+    $.ajax({
         url: `http://localhost:8080/course/${courseCode}/${studyGroup}/${practiceGroup}`,
         type: 'GET',
         success: function (rs) {
             ul_listSwapPreview = document.getElementById("ul_listSwapPreview")
-            htmls = rs.map(function(course) {
-				return `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-course-id="${course.courseId}">
+            htmls = rs.map(function (course) {
+                return `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-course-id="${course.courseId}">
                 \n\t\t\t\t\t\t\t\t\t<ul class="list">
                 \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Mã môn học: `+ course.courseCode + `</li>
                 \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Tên môn học môn học: `+ course.courseName + `</li>
@@ -152,14 +152,14 @@ function searchCourse() {
                 \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-swap" type="button" data-id=`+ course.id + `>Thông tin</a>
                 \n\t\t\t\t\t\t\t\t\t</div>
                 \n\t\t\t\t\t\t\t\t</li>`;
-			})
-			ul_listSwapPreview.innerHTML = htmls.join("");
+            })
+            ul_listSwapPreview.innerHTML = htmls.join("");
         }
     })
 }
 
 function showSwapByCourseId(courseId) {
-	$.ajax({
+    $.ajax({
         url: `http://localhost:8080/swap/get/${courseId}`,
         type: 'GET',
         success: function (swapList) {
@@ -236,7 +236,7 @@ function showSwapWishPreView(id) {
                         var checkJoined = false
                         listjoin = swapWishPreview.listJoinSwapPreview
 
-                        for (var i = 0; i < listjoin.length; i++) {
+                        for (var i = 0; i < listjoin.length;) {
                             if (listjoin[i].UserID == userId) {
                                 checkJoined = true;
                                 checkHas = true;
@@ -255,11 +255,20 @@ function showSwapWishPreView(id) {
                             \n\t\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: 
                             \n\t\t\t\t\t\t\t\t\t\t\t<span id="countJoin-`+ swapWishPreview.ID + `">` + swapWishPreview.listJoinSwapPreview.length + `</span></div>
-                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + (checkJoined ? `outline-danger float-right outJoin">Hủy` : `danger float-right ` + (checkHas ? "disJoin" : "joinSwap") + `">Tham gia`) + `</button></div>
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + (checkJoined ? `outline-danger float-right outJoin">Hủy` : `danger float-right disJoin">Tham gia`) + `</button></div>
                             \n\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t</li>`;
                         ul_swapInfo.innerHTML += htmlString;
                     })
+                    if (!checkHas) {
+                        var list = document.getElementsByClassName("disJoin");
+                        if (list.length > 0) {
+                            for (var i = 0; i < list.length; ) {
+                                list[i].classList.add("joinSwap");
+                                list[i].classList.remove("disJoin");
+                            }
+                        }
+                    }
                 }
             });
 
@@ -290,7 +299,7 @@ function createJoinSwap(swapWishId, element) {
         element.innerHTML = "Hủy"
 
         var listJoinSwap = document.getElementsByClassName("joinSwap");
-        for (var i = 0; i < listJoinSwap.length; i++) {
+        for (var i = 0; i < listJoinSwap.length;) {
             listJoinSwap[i].classList.add("disJoin");
             listJoinSwap[i].classList.remove("joinSwap");
         }
@@ -308,29 +317,28 @@ function deleteSwap() {
 }
 
 function deleteJoinSwap(swapWishId) {
-    var thisBtn = document.getElementsByClassName("outJoin")[0];
-    var listBlockedBtn = document.getElementsByClassName("disJoin");
-
-    var count = document.getElementById("countJoin-" + swapWishId);
-    count.innerHTML = parseInt(count.innerHTML) - 1;
-
-    thisBtn.classList.add("joinSwap");
-    thisBtn.classList.add("btn-danger");
-    thisBtn.classList.remove("outJoin");
-    thisBtn.classList.remove("btn-outline-danger");
-
-    thisBtn.innerHTML = "Tham gia"
-
-    for (var i = 0; i < listBlockedBtn.length; i++) {
-        listBlockedBtn[i].classList.add("joinSwap");
-        listBlockedBtn[i].classList.remove("disJoin");
-    }
-
     $.ajax({
-        url: "http://localhost:8080/swapwish/delete/1",
+        url: "http://localhost:8080/swapwish/delete/" + swapWishId,
         type: "DELETE",
         success: function (rs) {
-            console.log(rs)
+            var thisBtn = document.getElementsByClassName("outJoin")[0];
+            var listBlockedBtn = document.getElementsByClassName("disJoin");
+
+            var count = document.getElementById("countJoin-" + swapWishId);
+            count.innerHTML = parseInt(count.innerHTML) - 1;
+
+            thisBtn.classList.add("joinSwap");
+            thisBtn.classList.add("btn-danger");
+            thisBtn.classList.remove("outJoin");
+            thisBtn.classList.remove("btn-outline-danger");
+
+            thisBtn.innerHTML = "Tham gia"
+
+            for (var i = 0; i < listBlockedBtn.length;) {
+                listBlockedBtn[i].classList.add("joinSwap");
+                listBlockedBtn[i].classList.remove("disJoin");
+            }
+
         }
     })
 }

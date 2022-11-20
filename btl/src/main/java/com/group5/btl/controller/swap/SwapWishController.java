@@ -80,7 +80,14 @@ public class SwapWishController {
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity deleteJoinSwap(@PathVariable(name="id") Integer swapWishId) {
-		joinSwapService.DeleteJoinSwap(joinSwapService.GetByID(swapWishId));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken)
+			return null;
+
+		String userName = authentication.getName();
+		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
+
+		joinSwapService.DeleteJoinSwap(joinSwapService.GetByStudentAndSwapWish(userPreview.getId(),swapWishId));
 		return ResponseEntity.ok().build();
 	}
 }

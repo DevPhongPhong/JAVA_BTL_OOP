@@ -1,10 +1,6 @@
 package com.group5.btl.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,29 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.group5.btl.dto.user.UserPreview;
-import com.group5.btl.model.Course;
-import com.group5.btl.model.Student;
-import com.group5.btl.model.Swap;
-import com.group5.btl.repository.UserRepository;
-import com.group5.btl.service.CourseService;
-import com.group5.btl.service.StudentService;
-import com.group5.btl.service.sector.SectorService;
-
-
-import com.group5.btl.service.SwapService;
 import com.group5.btl.service.UserSevice;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
-	@Autowired
-	private SwapService _ss;
-
-	@Autowired
-	private CourseService courseService;
-
 	@Autowired
 	private UserSevice userSevice;
 	
@@ -88,5 +67,4 @@ public class HomeController {
 
 		return "home/create";
 	}
-}
 }
