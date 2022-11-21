@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,4 +33,12 @@ public class CourseController {
 		return ResponseEntity.ok().body(course);
 	}
 	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@DeleteMapping("/delete/{courseCode}/{studyGroup}/{practiceGroup}")
+	public ResponseEntity deleteCourse(@PathVariable(name = "courseCode") String courseCode,
+			@PathVariable(name = "studyGroup") Short studyGroup,
+			@PathVariable(name = "practiceGroup") Short practiceGroup) {
+		int res = courseService.delete(courseCode, studyGroup, practiceGroup);
+		return ResponseEntity.ok(res);
+	}
 }

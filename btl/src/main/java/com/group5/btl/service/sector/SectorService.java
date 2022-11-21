@@ -6,4 +6,5 @@ import com.group5.btl.model.Sector;
 public interface SectorService {
 	Sector findByCode(String code);
 	void createSector(SectorCreater sectorCreater);
+	int delete(String sectorCode);
 }

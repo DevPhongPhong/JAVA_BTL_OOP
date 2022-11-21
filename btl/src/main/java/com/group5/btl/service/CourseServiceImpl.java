@@ -43,4 +43,11 @@ public class CourseServiceImpl implements CourseService {
 		return 0;
 	}
 
+	@Override
+	public int delete(String courseCode, Short studyGroup, Short practiceGroup) {
+		Course course = _courseRepository.findByCourseCodeAndPracticeGroupAndStudyGroup(courseCode, practiceGroup, studyGroup);
+		_courseRepository.delete(course);
+		return 0;
+	}
+
 }

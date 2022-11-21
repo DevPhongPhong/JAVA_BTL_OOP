@@ -13,4 +13,5 @@ public interface CourseService {
     List<Course> getByCodeAndPracticeAndStudy(String courseCode, Short practiceGroup, Short studyGroup);
     
     int createCourse(CourseCreater courseCreater);
+	int delete(String courseCode, Short studyGroup, Short practiceGroup);
 }

@@ -25,5 +25,13 @@ public class SectorServiceImpl implements SectorService{
 		sectorRepository.save(new Sector(sectorCreater.getSectorCode(), sectorCreater.getSectorName()));
 		return ;
 	}
+
+	@Override
+	public int delete(String sectorCode) {
+		// TODO Auto-generated method stub
+		Sector sector = sectorRepository.findBySectorCode(sectorCode);
+		sectorRepository.delete(sector);
+		return 0;
+	}
 	
 }

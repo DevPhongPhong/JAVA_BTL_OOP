@@ -29,52 +29,93 @@
     <div class="container">
         <div class="row">
             <h1>Thêm môn học</h1>
-            <div class="container">
-                <form>
-                    <div class="row">
-                        <div class="row mb-2">
-                            <input type="text" class="form-control" placeholder="Mã môn học" name=""
-                                id="add-course-code">
+            <div class="col">
+                <div class="container">
+                    <form>
+                        <div class="row">
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Mã môn học" name=""
+                                    id="add-course-code">
+                            </div>
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Tên môn học" name=""
+                                    id="add-course-name">
+                            </div>
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Nhóm môn học" name=""
+                                    id="add-study-group">
+                            </div>
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Nhóm thực hành" name=""
+                                    id="add-practice-group">
+                            </div>
+                            <button type="button" class="btn btn-danger col-1" id="add-course">
+                                <span>Thêm</span>
+                            </button>
                         </div>
-                        <div class="row mb-2">
-                            <input type="text" class="form-control" placeholder="Tên môn học" name=""
-                                id="add-course-name">
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <form>
+                        <div class="row">
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Mã môn học" name=""
+                                    id="del-course-code">
+                            </div>
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Nhóm môn học" name=""
+                                    id="del-study-group">
+                            </div>
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Nhóm thực hành" name=""
+                                    id="del-practice-group">
+                            </div>
+                            <button type="button" class="btn btn-danger col-1" id="del-course">
+                                <span>Xóa</span>
+                            </button>
                         </div>
-                        <div class="row mb-2">
-                            <input type="text" class="form-control" placeholder="Nhóm môn học" name=""
-                                id="add-study-group">
-                        </div>
-                        <div class="row mb-2">
-                            <input type="text" class="form-control" placeholder="Nhóm thực hành" name=""
-                                id="add-practice-group">
-                        </div>
-                        <button type="button" class="btn btn-danger col-1" id="add-course">
-                            <span>Thêm</span>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     	<div class="row">
             <h1>Thêm ngành</h1>
-            <div class="container">
-                <form>
-                    <div class="row">
-                        <div class="row mb-2">
-                            <input type="text" class="form-control" placeholder="Mã ngành" name=""
-                                id="add-sector-code">
+            <div class="col">
+                <div class="container">
+                    <form>
+                        <div class="row">
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Mã ngành" name=""
+                                    id="add-sector-code">
+                            </div>
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Tên ngành" name=""
+                                    id="add-sector-name">
+                            </div>
+                            <button type="button" class="btn btn-danger col-1" id="add-sector">
+                                <span>Thêm</span>
+                            </button>
                         </div>
-                        <div class="row mb-2">
-                            <input type="text" class="form-control" placeholder="Tên ngành" name=""
-                                id="add-sector-name">
-                        </div>
-                        <button type="button" class="btn btn-danger col-1" id="add-sector">
-                            <span>Thêm</span>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-
+            <div class="col">
+                <div class="container">
+                    <form>
+                        <div class="row">
+                            <div class="row mb-2">
+                                <input type="text" class="form-control" placeholder="Mã ngành" name=""
+                                    id="del-sector-code">
+                            </div>
+                            <button type="button" class="btn btn-danger col-1" id="del-sector">
+                                <span>Xóa</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
