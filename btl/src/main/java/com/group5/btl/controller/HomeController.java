@@ -53,8 +53,8 @@ public class HomeController {
     		String userName = authentication.getName();
     		UserPreview userPreview = userSevice.getUserPreviewByEmail(userName);
     		HashMap<String, String> user = new HashMap<>();
-    		user.put("username", userPreview.getName());
-    		user.put("id", String.valueOf(userPreview.getId()));
+    		user.put("username", userPreview.getUserName());
+    		user.put("id", String.valueOf(userPreview.getUserId()));
     		model.addAttribute("user", user);
     	}
         return "home/index";
@@ -72,8 +72,8 @@ public class HomeController {
 			String userName = authentication.getName();
 			UserPreview userPreview = userSevice.getUserPreviewByEmail(userName);
 			HashMap<String, String> user = new HashMap<>();
-			user.put("username", userPreview.getName());
-			user.put("id", String.valueOf(userPreview.getId()));
+    		user.put("username", userPreview.getUserName());
+    		user.put("id", String.valueOf(userPreview.getUserId()));
 			model.addAttribute("user", user);
 		}
 		return "home/create";
@@ -91,8 +91,8 @@ public class HomeController {
 			String userName = authentication.getName();
 			UserPreview userPreview = userSevice.getUserPreviewByEmail(userName);
 			HashMap<String, String> user = new HashMap<>();
-			user.put("username", userPreview.getName());
-			user.put("id", String.valueOf(userPreview.getId()));
+    		user.put("username", userPreview.getUserName());
+    		user.put("id", String.valueOf(userPreview.getUserId()));
 			model.addAttribute("user", user);
 		}
 		return "swap/managejoinswap";
@@ -110,8 +110,8 @@ public class HomeController {
 			String userName = authentication.getName();
 			UserPreview userPreview = userSevice.getUserPreviewByEmail(userName);
 			HashMap<String, String> user = new HashMap<>();
-			user.put("username", userPreview.getName());
-			user.put("id", String.valueOf(userPreview.getId()));
+    		user.put("username", userPreview.getUserName());
+    		user.put("id", String.valueOf(userPreview.getUserId()));
 			model.addAttribute("user", user);
 		}
 		return "swap/manageswap";

@@ -58,12 +58,12 @@ public class UserServiceImpl implements UserSevice{
 	@Override
 	public UserPreview getUserPreview(int id) {
 		User user = userRepository.findById(id).get();
-		return new UserPreview(user.getId(), user.getName());
+		return new UserPreview(user.getId(), user.getName(), user.getEmail(), user.getPhoneNumber());
 	}
 
 	@Override
 	public UserPreview getUserPreviewByEmail(String email) {
 		User user = userRepository.findByEmail(email);
-		return new UserPreview(user.getId(), user.getName());
+		return new UserPreview(user.getId(), user.getName(), user.getEmail(), user.getPhoneNumber());
 	}
 }

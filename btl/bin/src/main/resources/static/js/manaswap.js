@@ -19,11 +19,6 @@ $(document).ready(function () {
         var swapId = $(this).parent().parent().data("swap-id");
         deleteSwap(swapId);
     })
-    
-    $("body").on("click", ".show-user-joined", function () {
-		var swapWishId = $(this).data("id");
-		showUserJoined(swapWishId);
-    })
 });
 const userId = parseInt($("#userbutton").attr("data-id"));
 
@@ -103,11 +98,7 @@ function showSwapWishPreView(id) {
                             \n\t\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: 
                             \n\t\t\t\t\t\t\t\t\t\t\t<span id="countJoin-`+ swapWishPreview.ID + `">` + swapWishPreview.listJoinSwapPreview.length + `</span></div>
-                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + `danger float-right disJoin show-user-joined">Người tham gia` + `</button></div>
-                            \n\t\t\t\t\t\t\t\t\t</div>
-                            \n\t\t\t\t\t\t\t\t\t<div class="row mt-2">
-                            \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list-user-join">
-                            \n\t\t\t\t\t\t\t\t\t\t\t</ul>
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + `danger float-right disJoin">Người tham gia` + `</button></div>
                             \n\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t</li>`;
                         ul_swapInfo.innerHTML += htmlString;
