@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserPreview {
-    public int Id;
-    public String Name;
+    private int userId;
+    private String userName;
+    private String userEmail;
+    private String userPhoneNumber;
 }

@@ -151,7 +151,7 @@ public class SwapController {
 		String userName = authentication.getName();
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
 
-		swapCreate.setUserId(userPreview.getId());
+		swapCreate.setUserId(userPreview.getUserId());
 		swapCreate.setListCourseWishID(new ArrayList<Integer>(list));
 		swapService.create(swapCreate);
 		return ResponseEntity.ok().body(swapCreate);
