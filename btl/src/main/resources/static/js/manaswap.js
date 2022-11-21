@@ -82,7 +82,7 @@ function showSwapWishPreView(id) {
                         var checkJoined = false
                         listjoin = swapWishPreview.listJoinSwapPreview
 
-                        for (var i = 0; i < listjoin.length;) {
+                        for (var i = 0; i < listjoin.length;i++) {
                             if (listjoin[i].UserID == userId) {
                                 checkJoined = true;
                                 checkHas = true;
@@ -132,6 +132,8 @@ function deleteSwap(swapId) {
         url: `http://localhost:8080/swap/delete/${swapId}`,
         type: "DELETE",
         success: function () {
+			console.log("done")
+			location.reload();
         }
     })
 }
@@ -156,6 +158,7 @@ function showUserJoined(swapWishId) {
                 \n\t\t\t\t\t\t\t\t</li>`;
                 listUserJoined.innerHTML += htmlString;
             })
+            $(".list-user-join")[0].fadeIn();
         }
     })
 }
