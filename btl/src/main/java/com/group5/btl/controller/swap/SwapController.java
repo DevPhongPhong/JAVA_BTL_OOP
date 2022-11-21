@@ -47,22 +47,34 @@ public class SwapController {
 
 	@Autowired
 	private UserSevice _us;
-	
+
 	@Autowired
 	private StudentService studentService;
-	
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
-	@GetMapping("/{courseCode}/{studyGroup}/{practiceGroup}")
-	public List<SwapPreview> getSwapByCourse(@PathVariable(name = "courseCode") String courseCode,
+	@GetMapping("/{courseCode}/{studyGroup}/{practiceGroup}/{page}")
+	public PagingDto<SwapPreview> getSwapByCourse(@PathVariable(name = "courseCode") String courseCode,
 			@PathVariable(name = "studyGroup") Short studyGroup,
-			@PathVariable(name = "practiceGroup") Short practiceGroup) {
+			@PathVariable(name = "practiceGroup") Short practiceGroup,
+			@PathVariable(name = "page") int page) {
+
 		List<SwapPreview> listSwapPreviews = new ArrayList<>();
 		List<Course> list = courseService.getByCodeAndPracticeAndStudy(courseCode, practiceGroup, studyGroup);
 		for (Course xCourse : list) {
 			listSwapPreviews.addAll(swapService.getByCourseId(xCourse.getId()));
 		}
-		return listSwapPreviews;
+
+		var listSp = new ArrayList<SwapPreview>();
+
+		for (int i = 3 * (page - 1); i < 3 * page && i < listSwapPreviews.size(); i++)
+			listSp.add(listSwapPreviews.get(i));
+
+		var res = new PagingDto<SwapPreview>();
+		res.page = page;
+		res.countPage = listSwapPreviews.size() / 3;
+		res.listObject = listSp;
+		
+		return res;
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
@@ -94,8 +106,8 @@ public class SwapController {
 	public ResponseEntity addSwap(@RequestBody SwapCreateFromView swapCreateFromView) {
 		var swapCreate = new SwapCreate(0, 0, new ArrayList<Integer>());
 		var list = new ArrayList<Integer>();
-		int temp1=0;
-		int temp2=0;
+		int temp1 = 0;
+		int temp2 = 0;
 		try {
 			temp1 = swapCreateFromView.getGroupSwap().getPracticeGroup();
 			temp2 = swapCreateFromView.getGroupSwap().getStudyGroup();
@@ -146,7 +158,7 @@ public class SwapController {
 		int res = swapService.delete(swapId);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/manage")
 	public List<SwapPreview> getListSwapByUserID() {

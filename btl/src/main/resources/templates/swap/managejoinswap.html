@@ -26,9 +26,9 @@
 	<nav class="navbar sticky-top navbar-light bg-light">
 		<div class="container">
 			<div>
-				<a class="navbar-brand" href="/"><img src="https://code.ptit.edu.vn/2020/images/logo_ptit.png"
+				<a class="navbar-brand" href="./"><img src="https://code.ptit.edu.vn/2020/images/logo_ptit.png"
 						alt="Logo" class="logo_ptit" width="80" height="80"></a>
-				<a class="btn btn-outline-danger" href="">Trang chủ</a>
+				<a class="btn btn-outline-danger" href="./">Trang chủ</a>
 			</div>
 
 			<ul class="nav justify-content-end">
@@ -39,7 +39,7 @@
 					<div th:object="${user}">
 						<a class="btn btn-outline-danger" href="/tao-yeu-cau">Tạo yêu cầu</a>
 						<a class="btn btn-outline-danger" href="/danh-sach-yeu-cau">Xem yêu cầu đã tạo</a>
-						<a class="btn btn-outline-danger" href="/danh-sach-tham-gia">Xem yêu cầu đã tham gia</a>
+						<a class="btn btn-danger" href="/danh-sach-tham-gia">Xem yêu cầu đã tham gia</a>
 						<button id="userbutton" type="button" class="btn btn-danger" th:text="${user.username}"
 							th:data-id="${user.id}"></button>
 						<a th:href="@{/logout}" class="btn btn-outline-danger">Đăng xuất</a>
