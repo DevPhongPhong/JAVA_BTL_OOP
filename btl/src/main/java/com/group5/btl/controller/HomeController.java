@@ -13,6 +13,7 @@ import com.group5.btl.dto.user.UserPreview;
 import com.group5.btl.model.Course;
 import com.group5.btl.model.Student;
 import com.group5.btl.model.Swap;
+import com.group5.btl.model.User;
 import com.group5.btl.repository.UserRepository;
 import com.group5.btl.service.CourseService;
 import com.group5.btl.service.StudentService;
@@ -34,6 +35,11 @@ public class HomeController {
 	
 	@Autowired
 	private SwapWishService swapWishService;
+	
+	@GetMapping("/admin")
+	public String adminPage(Model model) {
+		return "home/admin";
+	}
 	
     @GetMapping()
     public String Index(Model model) {

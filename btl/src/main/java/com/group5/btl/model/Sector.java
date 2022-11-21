@@ -32,4 +32,10 @@ public class Sector {
 
     @OneToMany(mappedBy = "sectorID",fetch = FetchType.LAZY)
     private List<Student> listStudents;
+
+	public Sector(String sectorCode, String name) {
+		super();
+		this.sectorCode = sectorCode;
+		this.name = name;
+	}
 }

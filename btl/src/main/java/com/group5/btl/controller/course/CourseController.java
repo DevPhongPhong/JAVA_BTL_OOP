@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.group5.btl.dto.course.CourseCreater;
 import com.group5.btl.dto.course.CourseInfo;
 import com.group5.btl.model.Course;
 import com.group5.btl.service.CourseService;
@@ -26,8 +27,8 @@ public class CourseController {
 	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/add")
-	public ResponseEntity addCourse(@RequestBody Course course) {
-		
+	public ResponseEntity addCourse(@RequestBody CourseCreater course) {
+		courseService.createCourse(course);
 		return ResponseEntity.ok().body(course);
 	}
 	
