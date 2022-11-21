@@ -42,4 +42,12 @@ public class Course {
 
     @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
     private List<SwapWish> listsSwapWishs;
+
+	public Course(String courseCode, String courseName, Short studyGroup, Short practiceGroup) {
+		super();
+		this.courseCode = courseCode;
+		this.courseName = courseName;
+		this.studyGroup = studyGroup;
+		this.practiceGroup = practiceGroup;
+	}
 }

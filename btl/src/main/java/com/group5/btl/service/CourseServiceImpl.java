@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.group5.btl.dto.course.CourseCreater;
 import com.group5.btl.model.Course;
 import com.group5.btl.repository.CourseRepository;
 
@@ -35,5 +36,11 @@ public class CourseServiceImpl implements CourseService {
         res.add(_courseRepository.findByCourseCodeAndPracticeGroupAndStudyGroup(courseCode, practiceGroup, studyGroup));
         return res;
     }
+
+	@Override
+	public int createCourse(CourseCreater courseCreater) {
+		_courseRepository.save(new Course(courseCreater.getCourseCode(), courseCreater.getCourseName(), courseCreater.getStudyGroup(), courseCreater.getPracticeGroup()));
+		return 0;
+	}
 
 }
