@@ -14,10 +14,10 @@ $(document).ready(function () {
         }
         $(this).parent().parent().addClass("bubble")
     })
-    
+
     $("body").on("click", ".delete-swap", function () {
-		var swapId = $(this).parent().parent().data("swap-id");
-		deleteSwap(swapId);
+        var swapId = $(this).parent().parent().data("swap-id");
+        deleteSwap(swapId);
     })
 });
 const userId = parseInt($("#userbutton").attr("data-id"));
@@ -28,26 +28,28 @@ function loadData(page) {
         url: 'http://localhost:8080/swap/manage',
         type: 'GET',
         success: function (swaps) {
-			swaps.map(function (swap) {
-                var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-swap-id="${swap.id}">
-                \n\t\t\t\t\t\t\t\t\t<ul class="list">
-                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời đăng: `+ swap.userName + `</li>
-                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Môn học: `+ swap.courseName + `</li>
-                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm môn học: `+ swap.studyGroup + `</li>
-                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm thực hành: `+ swap.practiceGroup + `</li>
-                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Thời gian đăng: `+ swap.createdDate + `</li>
-                \n\t\t\t\t\t\t\t\t\t</ul>
-                \n\t\t\t\t\t\t\t\t\t<br />
-                \n\t\t\t\t\t\t\t\t\t<div class="row">
-                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ swap.id + `>Thông tin</a>
-                \n\t\t\t\t\t\t\t\t\t</div>
-                \n\t\t\t\t\t\t\t\t\t<br />
-                \n\t\t\t\t\t\t\t\t\t<div class="row">
-                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right delete-swap" type="button" data-id=`+ swap.id + `>Xóa yêu cầu</a>
-                \n\t\t\t\t\t\t\t\t\t</div>
-                \n\t\t\t\t\t\t\t\t</li>`;
-                ul_listSwapPreview.innerHTML += htmlString;
-            })
+            if (swaps.length > 0) {
+                ul_listSwapPreview.innerHTML = ""
+                swaps.map(function (swap) {
+                    var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-swap-id="${swap.id}" id="liSwap${swap.id}">
+                    \n\t\t\t\t\t\t\t\t\t<ul class="list">
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời đăng: `+ swap.userName + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Môn học: `+ swap.courseName + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm môn học: `+ swap.studyGroup + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nhóm thực hành: `+ swap.practiceGroup + `</li>
+                    \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Thời gian đăng: `+ swap.createdDate + `</li>
+                    \n\t\t\t\t\t\t\t\t\t</ul>
+                    \n\t\t\t\t\t\t\t\t\t<br />
+                    \n\t\t\t\t\t\t\t\t\t<div class="row">
+                    \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ swap.id + `>Thông tin</a>
+                    \n\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t\t<div class="row">
+                    \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-outline-danger float-right delete-swap" type="button" data-id=`+ swap.id + `>Xóa yêu cầu</a>
+                    \n\t\t\t\t\t\t\t\t\t</div>
+                    \n\t\t\t\t\t\t\t\t</li>`;
+                    ul_listSwapPreview.innerHTML += htmlString;
+                })
+            }
         }
     })
 }
@@ -104,7 +106,7 @@ function showSwapWishPreView(id) {
                     if (!checkHas) {
                         var list = document.getElementsByClassName("disJoin");
                         if (list.length > 0) {
-                            for (var i = 0; i < list.length; ) {
+                            for (var i = 0; i < list.length;) {
                                 list[i].classList.add("joinSwap");
                                 list[i].classList.remove("disJoin");
                             }
@@ -122,7 +124,17 @@ function deleteSwap(swapId) {
     $.ajax({
         url: `http://localhost:8080/swap/delete/${swapId}`,
         type: "DELETE",
-        success: function () {
+        success: function (res) {
+            if (res > 0) {
+                swap = document.getElementById(`liSwap${swapId}`);
+                swap.remove();
+                document.getElementById("modal-body").innerHTML = 'Xóa thành công!'
+
+                $('#exampleModal').modal('show');
+                $('#exampleModal').on("click", ".close", () => {
+                    $('#exampleModal').modal('hide')
+                })
+            }
         }
     })
 }

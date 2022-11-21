@@ -65,7 +65,8 @@
                                     <input type="text" class="form-control" id="courseCode" placeholder="Mã môn học">
                                 </li>
                                 <li class="list-group-item"><label for="studyGroup">Nhóm môn học</label>
-                                    <input type="number" class="form-control" id="studyGroup" placeholder="Nhóm môn học">
+                                    <input type="number" class="form-control" id="studyGroup"
+                                        placeholder="Nhóm môn học">
                                 </li>
                                 <li class="list-group-item"><label for="practiceGroup">Nhóm thực hành</label>
                                     <input type="number" class="form-control" id="practiceGroup"
@@ -103,7 +104,7 @@
                                             <td><button class="btn btn-danger add" onclick="add()">Thêm</button></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" id="notification"style="color:red">
+                                            <td colspan="2" id="notification" style="color:red">
                                             </td>
                                             <td><button class="btn btn-danger" type="button"
                                                     onclick="post()">Tạo</button></td>
@@ -176,17 +177,18 @@
                 groupSwap: group,
                 swapWish: list
             }
+            var notification = document.getElementById("notification");
+
+
             $.ajax({
                 url: `http://localhost:8080/swap/add`,
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(model),
                 success: function (swaps) {
-                    var notification = document.getElementById("notification");
                     notification.innerHTML = 'Tạo thành công!';
                 },
-                error: function(res){
-                    var notification = document.getElementById("notification");
+                error: function (res) {
                     notification.innerHTML = res.responseText;
                 }
             })

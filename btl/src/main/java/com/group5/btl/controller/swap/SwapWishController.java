@@ -34,22 +34,22 @@ import java.util.*;
 @RestController
 @RequestMapping("/swapwish")
 public class SwapWishController {
-	
+
 	@Autowired
 	private StudentService studentService;
-	
+
 	@Autowired
 	private SwapService swapService;
-	
+
 	@Autowired
 	private JoinSwapService joinSwapService;
-	
+
 	@Autowired
 	private SwapWishService swapWishService;
-	
+
 	@Autowired
 	private UserSevice _us;
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@GetMapping("/{id}")
 	public List<SwapWishPreview> getListSwapWish(@PathVariable(name = "id") Integer swapId) {
@@ -57,7 +57,7 @@ public class SwapWishController {
 		SwapInfo swapInfo = swapService.getInfo(swap);
 		return swapInfo.getListSwapWishPreview();
 	}
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/join")
 	public ResponseEntity joinSwap(@RequestBody JoinSwapCreate joinSwap) {
@@ -68,25 +68,28 @@ public class SwapWishController {
 
 		String userName = authentication.getName();
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
-		
 
 		Student student = studentService.GetById(userPreview.getId());
 		SwapWish swapWish = swapWishService.GetSwapWishByID(joinSwap.getSwapWishId());
+
+		if (swapWish.getSwapId().getUserId().getId() == student.getId())
+			return ResponseEntity.badRequest().body("Không thử tự tham gia môn bạn đăng được!");
+
 		joinSwapService.CreateJoinSwap(swapWish, student);
 		joinSwap.setUserId(student.getId());
 		return ResponseEntity.ok().body(joinSwap);
 	}
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@DeleteMapping("/deleteswapwish/{id}")
-	public ResponseEntity deleteSwapWish(@PathVariable(name="id") Integer swapWishId) {
+	public ResponseEntity deleteSwapWish(@PathVariable(name = "id") Integer swapWishId) {
 		swapWishService.deleteSwapWishById(swapWishId);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity deleteJoinSwap(@PathVariable(name="id") Integer swapWishId) {
+	public ResponseEntity deleteJoinSwap(@PathVariable(name = "id") Integer swapWishId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken)
 			return null;
@@ -94,7 +97,7 @@ public class SwapWishController {
 		String userName = authentication.getName();
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
 
-		joinSwapService.DeleteJoinSwap(joinSwapService.GetByStudentAndSwapWish(userPreview.getId(),swapWishId));
+		joinSwapService.DeleteJoinSwap(joinSwapService.GetByStudentAndSwapWish(userPreview.getId(), swapWishId));
 		return ResponseEntity.ok().build();
 	}
 }

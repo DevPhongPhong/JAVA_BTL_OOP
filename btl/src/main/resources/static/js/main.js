@@ -38,12 +38,7 @@ $(document).ready(function () {
         if (userId >= 1) {
             var id = $(this).data('id');
             createJoinSwap(id, this);
-            document.getElementById("modal-body").innerHTML = 'Tham gia đổi môn thành công!'
 
-            $('#exampleModal').modal('show');
-            $('#exampleModal').on("click", ".close", () => {
-                $('#exampleModal').modal('hide')
-            })
         }
         else {
             window.location.href = "/login"
@@ -85,8 +80,10 @@ function loadData(page) {
             countPage = res.countPage
             pageNow = res.page
             ul_listSwapPreview = document.getElementById("ul_listSwapPreview")
-            swaps.map(function (swap) {
-                var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" id="swapId-` + swap.id + `">
+            if (countPage == 0) ul_listSwapPreview.innerHTML = 'Không có dữ liệu!';
+            else {
+                swaps.map(function (swap) {
+                    var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" id="swapId-` + swap.id + `">
                 \n\t\t\t\t\t\t\t\t\t<ul class="list">
                 \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời đăng: `+ swap.userName + `</li>
                 \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Môn học: `+ swap.courseName + `</li>
@@ -99,13 +96,13 @@ function loadData(page) {
                 \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ swap.id + `>Thông tin</a>
                 \n\t\t\t\t\t\t\t\t\t</div>
                 \n\t\t\t\t\t\t\t\t</li>`;
-                ul_listSwapPreview.innerHTML += htmlString;
-            })
-            $("#ul_listSwapPreview").fadeOut(() => {
-                if (swaps == undefined) ul_listSwapPreview.innerHTML = 'Không có dữ liệu'
-                ul_listSwapPreview.innerHTML = ''
-                swaps.map(function (swap) {
-                    var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item" id="swapId-` + swap.id + `">
+                    ul_listSwapPreview.innerHTML += htmlString;
+                })
+                $("#ul_listSwapPreview").fadeOut(() => {
+                    if (swaps == undefined) ul_listSwapPreview.innerHTML = 'Không có dữ liệu'
+                    ul_listSwapPreview.innerHTML = ''
+                    swaps.map(function (swap) {
+                        var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item" id="swapId-` + swap.id + `">
                     \n\t\t\t\t\t\t\t\t\t<ul class="list">
                     \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời đăng: `+ swap.userName + `</li>
                     \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Môn học: `+ swap.courseName + `</li>
@@ -118,18 +115,19 @@ function loadData(page) {
                     \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right get-info" type="button" data-id=`+ swap.id + `>Thông tin</a>
                     \n\t\t\t\t\t\t\t\t\t</div>
                     \n\t\t\t\t\t\t\t\t</li>`;
-                    ul_listSwapPreview.innerHTML += htmlString;
+                        ul_listSwapPreview.innerHTML += htmlString;
+                    })
                 })
-            })
-            $("#ul_listSwapPreview").fadeIn();
+                $("#ul_listSwapPreview").fadeIn();
 
 
-            paging = document.getElementById("paging")
-            paging.innerHTML = ''
-            for (let i = 1; i <= countPage; i++) {
-                paging.innerHTML += `\n\t\t\t\t\t\t\t\t<div class="col-sm paging">
+                paging = document.getElementById("paging")
+                paging.innerHTML = ''
+                for (let i = 1; i <= countPage; i++) {
+                    paging.innerHTML += `\n\t\t\t\t\t\t\t\t<div class="col-sm paging">
                 \n\t\t\t\t\t\t\t\t\t<button class="btn btn`+ (pageNow == i ? '' : '-outline') + `-danger paginbtn" data-page=` + i + `>` + i + `</button>
                 \n\t\t\t\t\t\t\t\t</div>`
+                }
             }
         }
     })
@@ -325,21 +323,37 @@ function createJoinSwap(swapWishId, element) {
         url: "http://localhost:8080/swapwish/join",
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(formData)
-    }).done(function (res) {
-        var count = document.getElementById("countJoin-" + res.swapWishId);
-        count.innerHTML = parseInt(count.innerHTML) + 1;
+        data: JSON.stringify(formData),
+        success: function (res) {
+            var count = document.getElementById("countJoin-" + res.swapWishId);
+            count.innerHTML = parseInt(count.innerHTML) + 1;
 
-        element.classList.add("outJoin");
-        element.classList.add("btn-outline-danger");
-        element.classList.remove("joinSwap");
-        element.classList.remove("btn-danger");
-        element.innerHTML = "Hủy"
+            element.classList.add("outJoin");
+            element.classList.add("btn-outline-danger");
+            element.classList.remove("joinSwap");
+            element.classList.remove("btn-danger");
+            element.innerHTML = "Hủy"
 
-        var listJoinSwap = document.getElementsByClassName("joinSwap");
-        for (var i = 0; i < listJoinSwap.length;) {
-            listJoinSwap[i].classList.add("disJoin");
-            listJoinSwap[i].classList.remove("joinSwap");
+            var listJoinSwap = document.getElementsByClassName("joinSwap");
+            for (var i = 0; i < listJoinSwap.length;) {
+                listJoinSwap[i].classList.add("disJoin");
+                listJoinSwap[i].classList.remove("joinSwap");
+            }
+
+            document.getElementById("modal-body").innerHTML = 'Tham gia đổi môn thành công!'
+
+            $('#exampleModal').modal('show');
+            $('#exampleModal').on("click", ".close", () => {
+                $('#exampleModal').modal('hide')
+            })
+        },
+        error: function (res) {
+            document.getElementById("modal-body").innerHTML = res.responseText
+
+            $('#exampleModal').modal('show');
+            $('#exampleModal').on("click", ".close", () => {
+                $('#exampleModal').modal('hide')
+            })
         }
     })
 }

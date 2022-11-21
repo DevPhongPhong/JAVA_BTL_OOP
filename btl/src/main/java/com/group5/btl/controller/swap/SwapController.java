@@ -73,7 +73,7 @@ public class SwapController {
 		res.page = page;
 		res.countPage = listSwapPreviews.size() / 3;
 		res.listObject = listSp;
-		
+
 		return res;
 	}
 
@@ -90,7 +90,7 @@ public class SwapController {
 	public PagingDto<SwapPreview> getListSwap() {
 		var list = swapService.getAll();
 		var res = swapService.getPreviews(list, 1, 3);
-		return new PagingDto<SwapPreview>(1, list.size() / 3 + 1, res);
+		return new PagingDto<SwapPreview>(1, list.size() % 3 == 0 ? list.size() : list.size() / 3 + 1, res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
@@ -98,14 +98,14 @@ public class SwapController {
 	public PagingDto<SwapPreview> getListSwap(@PathVariable(name = "page") int page) {
 		var list = swapService.getAll();
 		var res = swapService.getPreviews(list, page, 3);
-		return new PagingDto<SwapPreview>(page, list.size() / 3 + 1, res);
+		return new PagingDto<SwapPreview>(page, list.size() % 3 == 0 ? list.size() : list.size() / 3 + 1, res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/add")
 	public ResponseEntity addSwap(@RequestBody SwapCreateFromView swapCreateFromView) {
 		var swapCreate = new SwapCreate(0, 0, new ArrayList<Integer>());
-		var list = new ArrayList<Integer>();
+		var list = new TreeSet<Integer>();
 		int temp1 = 0;
 		int temp2 = 0;
 		try {
@@ -127,6 +127,11 @@ public class SwapController {
 				temp1 = item.getPracticeGroup();
 				temp2 = item.getStudyGroup();
 
+				if (temp1 == swapCreateFromView.getGroupSwap().PracticeGroup
+						&& temp2 == swapCreateFromView.getGroupSwap().StudyGroup)
+					return ResponseEntity.badRequest()
+							.body("Không được trùng môn!");
+
 				list.add(_cs.getByCodeAndPracticeAndStudy(swapCreateFromView.getCourseCode(),
 						item.getPracticeGroup(),
 						item.getStudyGroup())
@@ -147,7 +152,7 @@ public class SwapController {
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
 
 		swapCreate.setUserId(userPreview.getId());
-		swapCreate.setListCourseWishID(list);
+		swapCreate.setListCourseWishID(new ArrayList<Integer>(list));
 		swapService.create(swapCreate);
 		return ResponseEntity.ok().body(swapCreate);
 	}
@@ -156,7 +161,7 @@ public class SwapController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity deleteSwap(@PathVariable(name = "id") Integer swapId) {
 		int res = swapService.delete(swapId);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
