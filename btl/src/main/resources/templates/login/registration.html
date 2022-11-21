@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{css/sign_up.css}">
+</head>
+<body>
+    <section>
+        <div class="img-bg">
+            <img th:src="@{images/bg_right.png}" alt="">
+        </div>
+        <div class="container">
+            <div class="form">
+                <div th:if="${param.success}">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> You have successfully created an account.
+                    </div>
+                </div>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+				    	<strong>Failed!</strong> The email or phone number you registered already exists.
+				  	</div>
+                </div>
+                <h2>Đăng Ký</h2>
+                <form th:action="@{/registration}" method="POST" id="register-form" th:object="${user}">
+                    <div class="input-form">
+                        <span>Name</span>
+                        <input type="text" th:field="*{name}" id="name" placeholder="Your Name">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <span>Email</span>
+                        <input type="email" th:field="*{email}" id="email" placeholder="Your Email">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <span>Phone Number</span>
+                        <input type="text" th:field="*{phoneNumber}" id="phonenumber" placeholder="Your Phone Number">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <span>Student Code</span>
+                        <input type="text" th:field="*{studentCode}" id="studentcode" placeholder="B20DCCN123">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <span>Sector ID</span>
+                        <input type="text" th:field="*{sectorId}" id="sectorid" placeholder="CNTT, ATTT...">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <span>Password</span>
+                        <input type="password" th:field="*{password}" id="pass" placeholder="Password">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <span>Confirm Password</span>
+                        <input type="password" id="re_pass" placeholder="Repeat your password">
+                        <span class="form-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <input type="submit" value="Sign up" id="signup">
+                    </div>
+                    <div class="input-form">
+                        <p>Already have an acount? <a th:href="@{/login}">Sign in</a></p>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </section>
+    
+    <script th:src="@{/js/validate.js}"></script>
+</body>
+</html>

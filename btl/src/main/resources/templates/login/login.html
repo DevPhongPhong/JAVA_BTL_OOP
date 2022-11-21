@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" th:href="@{css/sign_in.css}">
+</head>
+<body>
+    
+    <section>
+        <div class="img-bg">
+            <img th:src="@{images/bg_right.png}" alt="">
+        </div>    
+        <div class="container">
+            <div class="form">
+            	<div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        <strong>Fail!</strong> Invalid username or password.
+                    </div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> You have been logged out.
+                    </div>
+                </div>
+                <h2>Đăng Nhập</h2>
+                <form th:action="@{/login}" method="POST" id="login-form">
+                    <div class="input-form">
+                        <span>Email</span>
+                        <input type="text" name="username" id="username" placeholder="abc123@gmail.com">
+                    </div>
+                    <div class="input-form">
+                        <span>Password</span>
+                        <input type="password" name="password" id="password" placeholder="******">
+                    </div>
+                    <div class="input-form">
+                        <input type="submit" value="Sign in" name="signin" id="signin">
+                    </div>
+                    <div class="input-form">
+                        <p>Need an account? <a th:href="@{/registration}">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
