@@ -11,8 +11,8 @@ $(document).ready(function () {
     })
 
     $("body").on("click", ".delete-joinswap", function () {
-		var swapId = $(this).data("swap-id");
-		deleteJoinSwap(swapId);
+        var swapId = $(this).data("swap-id");
+        deleteJoinSwap(swapId);
     })
 });
 const userId = parseInt($("#userbutton").attr("data-id"));
@@ -53,6 +53,14 @@ function deleteJoinSwap(joinSwapId) {
         url: `http://localhost:8080/joinswap/delete/${joinSwapId}`,
         type: "DELETE",
         success: function () {
+            document.getElementById("modal-body").innerHTML = 'Xóa thành công!'
+
+            $('#exampleModal').modal('show');
+            $('#exampleModal').on("click", ".close", () => {
+                $('#exampleModal').modal('hide');
+                window.location.href = '/danh-sach-tham-gia'
+            })
+
         }
     })
 }

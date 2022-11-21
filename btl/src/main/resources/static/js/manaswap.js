@@ -132,7 +132,8 @@ function deleteSwap(swapId) {
 
                 $('#exampleModal').modal('show');
                 $('#exampleModal').on("click", ".close", () => {
-                    $('#exampleModal').modal('hide')
+                    $('#exampleModal').modal('hide');
+                    window.location.href = '/danh-sach-yeu-cau'
                 })
             }
         }
