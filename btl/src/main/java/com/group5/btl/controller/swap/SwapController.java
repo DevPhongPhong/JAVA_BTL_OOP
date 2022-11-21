@@ -71,7 +71,7 @@ public class SwapController {
 
 		var res = new PagingDto<SwapPreview>();
 		res.page = page;
-		res.countPage = listSwapPreviews.size() / 3;
+		res.countPage = listSwapPreviews.size() % 3;
 		res.listObject = listSp;
 
 		return res;

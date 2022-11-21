@@ -144,6 +144,7 @@ function searchCourse(page) {
             url: `http://localhost:8080/swap/${courseCode}/${studyGroup}/${practiceGroup}/${page}`,
             type: 'GET',
             success: function (res) {
+				console.log(res);
                 ul_listSwapPreview = document.getElementById("ul_listSwapPreview");
                 countPage = res.countPage;
                 pageNow = res.page;

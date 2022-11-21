@@ -1,12 +1,16 @@
 package com.group5.btl.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group5.btl.dto.swap.JoinSwapPreview;
 import com.group5.btl.dto.swap.SwapWishPreview;
+import com.group5.btl.dto.user.UserPreview;
+import com.group5.btl.model.JoinSwap;
+import com.group5.btl.model.Student;
 import com.group5.btl.model.SwapWish;
 import com.group5.btl.repository.SwapWishRepository;
 @Service
@@ -15,6 +19,8 @@ public class SwapWishServiceImpl implements SwapWishService {
     private SwapWishRepository _swr;
     @Autowired
     private JoinSwapService _jss;
+    @Autowired
+    private SwapWishRepository swapWishRepository;
 
     @Override
     public SwapWish GetSwapWishByID(int id) {
@@ -33,6 +39,18 @@ public class SwapWishServiceImpl implements SwapWishService {
 	@Override
 	public void deleteSwapWishById(Integer id) {
 		_swr.deleteById(id);
+	}
+
+	@Override
+	public List<UserPreview> getUserPreviewsJoinSwapWish(Integer swapWishId) {
+		// TODO Auto-generated method stub
+		List<JoinSwap> list = swapWishRepository.findById(swapWishId).get().getListJoinSwaps();
+		List<UserPreview> res = new ArrayList<>();
+		for(JoinSwap xJoinSwap : list) {
+			Student student = xJoinSwap.getUserId();
+			res.add(new UserPreview(student.getId(), student.getName(), student.getEmail(), student.getPhoneNumber()));
+		}
+		return res;
 	}
 
 }

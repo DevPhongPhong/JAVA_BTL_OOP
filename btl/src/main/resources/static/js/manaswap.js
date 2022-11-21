@@ -19,6 +19,11 @@ $(document).ready(function () {
         var swapId = $(this).parent().parent().data("swap-id");
         deleteSwap(swapId);
     })
+    
+    $("body").on("click", ".show-user-joined", function () {
+		var swapWishId = $(this).data("id");
+		showUserJoined(swapWishId);
+    })
 });
 const userId = parseInt($("#userbutton").attr("data-id"));
 
@@ -79,7 +84,7 @@ function showSwapWishPreView(id) {
                         var checkJoined = false
                         listjoin = swapWishPreview.listJoinSwapPreview
 
-                        for (var i = 0; i < listjoin.length;) {
+                        for (var i = 0; i < listjoin.length;i++) {
                             if (listjoin[i].UserID == userId) {
                                 checkJoined = true;
                                 checkHas = true;
@@ -98,7 +103,11 @@ function showSwapWishPreView(id) {
                             \n\t\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-5">Số người tham gia đổi: 
                             \n\t\t\t\t\t\t\t\t\t\t\t<span id="countJoin-`+ swapWishPreview.ID + `">` + swapWishPreview.listJoinSwapPreview.length + `</span></div>
-                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + `danger float-right disJoin">Người tham gia` + `</button></div>
+                            \n\t\t\t\t\t\t\t\t\t\t<div class="col-md-2"><button data-id=`+ swapWishPreview.ID + ` class="btn btn-` + `danger float-right disJoin show-user-joined">Người tham gia` + `</button></div>
+                            \n\t\t\t\t\t\t\t\t\t</div>
+                            \n\t\t\t\t\t\t\t\t\t<div class="row mt-2">
+                            \n\t\t\t\t\t\t\t\t\t\t\t<ul class="list-user-join">
+                            \n\t\t\t\t\t\t\t\t\t\t\t</ul>
                             \n\t\t\t\t\t\t\t\t\t</div>
                             \n\t\t\t\t\t\t\t\t</li>`;
                         ul_swapInfo.innerHTML += htmlString;
@@ -135,6 +144,31 @@ function deleteSwap(swapId) {
                     $('#exampleModal').modal('hide')
                 })
             }
+        }
+    })
+}
+
+function showUserJoined(swapWishId) {
+	$.ajax({
+        url: `http://localhost:8080/swapwish/joinswap/${swapWishId}`,
+        type: 'GET',
+        success: function (listUser) {
+			let listUserJoined = $(".list-user-join")[0]
+			listUser.map(function (user) {
+                var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-user-id="${user.userId}">
+                \n\t\t\t\t\t\t\t\t\t<ul class="list">
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời tham gia: `+ user.userName + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Email: `+ user.userEmail + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Số điện thoại: `+ user.userPhoneNumber + `</li>
+                \n\t\t\t\t\t\t\t\t\t</ul>
+                \n\t\t\t\t\t\t\t\t\t<br />
+                \n\t\t\t\t\t\t\t\t\t<div class="row">
+                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right select-swap" type="button" data-id=`+ user.id + `>Đổi</a>
+                \n\t\t\t\t\t\t\t\t\t</div>
+                \n\t\t\t\t\t\t\t\t</li>`;
+                listUserJoined.innerHTML += htmlString;
+            })
+            $(".list-user-join")[0].fadeIn();
         }
     })
 }
