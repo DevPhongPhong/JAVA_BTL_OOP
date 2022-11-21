@@ -71,7 +71,7 @@ public class SwapController {
 
 		var res = new PagingDto<SwapPreview>();
 		res.page = page;
-		res.countPage = listSwapPreviews.size() / 3;
+		res.countPage = list.size() % 3 == 0 ? list.size() / 3 : list.size() / 3 + 1;
 		res.listObject = listSp;
 
 		return res;
@@ -90,7 +90,7 @@ public class SwapController {
 	public PagingDto<SwapPreview> getListSwap() {
 		var list = swapService.getAll();
 		var res = swapService.getPreviews(list, 1, 3);
-		return new PagingDto<SwapPreview>(1, list.size() % 3 == 0 ? list.size() : list.size() / 3 + 1, res);
+		return new PagingDto<SwapPreview>(1, list.size() % 3 == 0 ? list.size() / 3 : list.size() / 3 + 1, res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
@@ -98,7 +98,7 @@ public class SwapController {
 	public PagingDto<SwapPreview> getListSwap(@PathVariable(name = "page") int page) {
 		var list = swapService.getAll();
 		var res = swapService.getPreviews(list, page, 3);
-		return new PagingDto<SwapPreview>(page, list.size() % 3 == 0 ? list.size() : list.size() / 3 + 1, res);
+		return new PagingDto<SwapPreview>(page, list.size() % 3 == 0 ? list.size() / 3 : list.size() / 3 + 1, res);
 	}
 
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
