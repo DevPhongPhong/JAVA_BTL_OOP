@@ -79,7 +79,7 @@ function showSwapWishPreView(id) {
                         var checkJoined = false
                         listjoin = swapWishPreview.listJoinSwapPreview
 
-                        for (var i = 0; i < listjoin.length;) {
+                        for (var i = 0; i < listjoin.length;i++) {
                             if (listjoin[i].UserID == userId) {
                                 checkJoined = true;
                                 checkHas = true;

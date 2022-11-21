@@ -75,7 +75,7 @@ public class SwapWishController {
 		SwapWish swapWish = swapWishService.GetSwapWishByID(joinSwap.getSwapWishId());
 
 		if (swapWish.getSwapId().getUserId().getId() == student.getId())
-			return ResponseEntity.badRequest().body("Không thử tự tham gia môn bạn đăng được!");
+			return ResponseEntity.badRequest().body("Không thể tự tham gia môn bạn đăng được!");
 
 		joinSwapService.CreateJoinSwap(swapWish, student);
 		joinSwap.setUserId(student.getId());
