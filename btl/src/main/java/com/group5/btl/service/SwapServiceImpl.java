@@ -1,8 +1,13 @@
 package com.group5.btl.service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +41,7 @@ public class SwapServiceImpl implements SwapService {
     private JoinSwapRepository _joinSwapRepository;
     @Autowired
     private SwapWishService _sws;
-    
+
     @Autowired
     private CourseService courseService;
 
@@ -79,6 +84,18 @@ public class SwapServiceImpl implements SwapService {
 
     @Override
     public List<Swap> getAll() {
+        var res = _swapRepository.findAll();
+        for (var item : res) {
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+
+            Timestamp old = item.getCreatedDate();
+            ZonedDateTime zonedDateTime = old.toInstant().atZone(ZoneId.of("UTC"));
+            Timestamp newTime = Timestamp.from(zonedDateTime.plus(14, ChronoUnit.DAYS).toInstant());
+
+            if (newTime.before(now)) {
+                delete(item.getId());
+            }
+        }
         return _swapRepository.findAll();
     }
 
@@ -188,29 +205,31 @@ public class SwapServiceImpl implements SwapService {
     }
     // #endregion
 
-	@Override
-	public List<SwapPreview> getByCourseId(Integer courseId) {
-		Course course = courseService.getById(courseId);
-		List<Swap> listSwaps = _swapRepository.findByCourseId(course);
-		List<SwapPreview> resList = new ArrayList<>();
-		for(Swap xSwap : listSwaps) {
-			resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
-					xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(), xSwap.getCourseId().getCourseName(),
-					xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
-		}
-		return resList;
-	}
+    @Override
+    public List<SwapPreview> getByCourseId(Integer courseId) {
+        Course course = courseService.getById(courseId);
+        List<Swap> listSwaps = _swapRepository.findByCourseId(course);
+        List<SwapPreview> resList = new ArrayList<>();
+        for (Swap xSwap : listSwaps) {
+            resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
+                    xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(),
+                    xSwap.getCourseId().getCourseName(),
+                    xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
+        }
+        return resList;
+    }
 
-	@Override
-	public List<SwapPreview> getByUserId(Student student) {
-		List<Swap> listSwaps = _swapRepository.findByUserId(student);
-		List<SwapPreview> resList = new ArrayList<>();
-		for(Swap xSwap : listSwaps) {
-			resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
-					xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(), xSwap.getCourseId().getCourseName(),
-					xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
-		}
-		return resList;
-	}
+    @Override
+    public List<SwapPreview> getByUserId(Student student) {
+        List<Swap> listSwaps = _swapRepository.findByUserId(student);
+        List<SwapPreview> resList = new ArrayList<>();
+        for (Swap xSwap : listSwaps) {
+            resList.add(new SwapPreview(xSwap.getId(), xSwap.getUserId().getName(),
+                    xSwap.getCreatedDate().toString(), xSwap.getCourseId().getCourseCode(),
+                    xSwap.getCourseId().getCourseName(),
+                    xSwap.getCourseId().getStudyGroup(), xSwap.getCourseId().getPracticeGroup()));
+        }
+        return resList;
+    }
 
 }
