@@ -138,3 +138,28 @@ function deleteSwap(swapId) {
         }
     })
 }
+
+function showUserJoined(swapWishId) {
+	$.ajax({
+        url: `http://localhost:8080/swapwish/joinswap/${swapWishId}`,
+        type: 'GET',
+        success: function (listUser) {
+			let listUserJoined = $(".list-user-join")[0]
+			listUser.map(function (user) {
+                var htmlString = `\n\t\t\t\t\t\t\t\t<li class="list-group-item mb-4" data-user-id="${user.userId}">
+                \n\t\t\t\t\t\t\t\t\t<ul class="list">
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Nguời tham gia: `+ user.userName + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Email: `+ user.userEmail + `</li>
+                \n\t\t\t\t\t\t\t\t\t\t<li class="list__left">Số điện thoại: `+ user.userPhoneNumber + `</li>
+                \n\t\t\t\t\t\t\t\t\t</ul>
+                \n\t\t\t\t\t\t\t\t\t<br />
+                \n\t\t\t\t\t\t\t\t\t<div class="row">
+                \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right select-swap" type="button" data-id=`+ user.id + `>Đổi</a>
+                \n\t\t\t\t\t\t\t\t\t</div>
+                \n\t\t\t\t\t\t\t\t</li>`;
+                listUserJoined.innerHTML += htmlString;
+            })
+            $(".list-user-join")[0].fadeIn();
+        }
+    })
+}

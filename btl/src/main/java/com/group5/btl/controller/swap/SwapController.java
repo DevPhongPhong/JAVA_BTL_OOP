@@ -71,7 +71,7 @@ public class SwapController {
 
 		var res = new PagingDto<SwapPreview>();
 		res.page = page;
-		res.countPage = list.size() % 3 == 0 ? list.size() / 3 : list.size() / 3 + 1;
+		res.countPage = listSwapPreviews.size() % 3 == 0 ? listSwapPreviews.size() / 3 : listSwapPreviews.size() / 3 + 1;
 		res.listObject = listSp;
 
 		return res;
@@ -130,7 +130,7 @@ public class SwapController {
 				if (temp1 == swapCreateFromView.getGroupSwap().PracticeGroup
 						&& temp2 == swapCreateFromView.getGroupSwap().StudyGroup)
 					return ResponseEntity.badRequest()
-							.body("Không được trùng môn!");
+							.body("Không được trùng nhóm!");
 
 				list.add(_cs.getByCodeAndPracticeAndStudy(swapCreateFromView.getCourseCode(),
 						item.getPracticeGroup(),

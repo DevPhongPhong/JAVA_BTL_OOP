@@ -11,8 +11,8 @@ $(document).ready(function () {
     })
 
     $("body").on("click", ".delete-joinswap", function () {
-        var swapId = $(this).parent().parent().data("swap-id");
-        deleteSwap(swapId);
+		var swapId = $(this).data("swap-id");
+		deleteJoinSwap(swapId);
     })
 });
 const userId = parseInt($("#userbutton").attr("data-id"));
@@ -38,7 +38,7 @@ function loadData(page) {
                     \n\t\t\t\t\t\t\t\t\t</ul>
                     \n\t\t\t\t\t\t\t\t\t<br />
                     \n\t\t\t\t\t\t\t\t\t<div class="row">
-                    \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right delete-joinswap" type="button" data-id=`+ swap.id + `>Xóa</a>
+                    \n\t\t\t\t\t\t\t\t\t\t<button href="" class="btn btn-danger float-right delete-joinswap" type="button" data-swap-id=`+ swap.id + `>Xóa</a>
                     \n\t\t\t\t\t\t\t\t\t</div>
                     \n\t\t\t\t\t\t\t\t</li>`;
                     ul_listSwapPreview.innerHTML += htmlString;
