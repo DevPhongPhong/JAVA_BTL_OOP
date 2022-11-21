@@ -42,7 +42,7 @@ Validator.isEmail = function (selector) {
 		selector: selector,
 		test: function(value) {
 			let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-			return regex.test(value) ? undefined : "Vui long nhap dung dinh dang email!";
+			return regex.test(value) ? undefined : "Vui long nhap dung email!";
 		}
 	};
 };
@@ -52,7 +52,7 @@ Validator.isPhonenumber = function (selector) {
 		selector: selector,
 		test: function(value) {
 			let regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
-			return regex.test(value) ? undefined : "Vui long nhap dung dinh dang so dien thoai!";
+			return regex.test(value) ? undefined : "Vui long nhap dung so dien thoai!";
 		}
 	}
 }
@@ -79,6 +79,8 @@ Validator({
 	form: "#register-form",
 	rules: [
 		Validator.isRequired("#name"),
+		Validator.isRequired("#studentcode"),
+		Validator.isRequired("#sectorid"),
 		Validator.isEmail("#email"),
 		Validator.isPhonenumber("#phonenumber"),
 		Validator.minLength("#pass", 6),
