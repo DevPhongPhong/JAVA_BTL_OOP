@@ -59,6 +59,12 @@ public class SwapWishController {
 	}
 	
 	@CrossOrigin(origins = "http://127.0.0.1:5500/")
+	@GetMapping("/joinswap/{id}")
+	public List<UserPreview> getListUserJoinSwap(@PathVariable(name = "id") Integer swapId) {
+		return swapWishService.getUserPreviewsJoinSwapWish(swapId);
+	}
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500/")
 	@PostMapping("/join")
 	public ResponseEntity joinSwap(@RequestBody JoinSwapCreate joinSwap) {
 
@@ -70,7 +76,7 @@ public class SwapWishController {
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
 		
 
-		Student student = studentService.GetById(userPreview.getId());
+		Student student = studentService.GetById(userPreview.getUserId());
 		SwapWish swapWish = swapWishService.GetSwapWishByID(joinSwap.getSwapWishId());
 		joinSwapService.CreateJoinSwap(swapWish, student);
 		joinSwap.setUserId(student.getId());
@@ -94,7 +100,7 @@ public class SwapWishController {
 		String userName = authentication.getName();
 		UserPreview userPreview = _us.getUserPreviewByEmail(userName);
 
-		joinSwapService.DeleteJoinSwap(joinSwapService.GetByStudentAndSwapWish(userPreview.getId(),swapWishId));
+		joinSwapService.DeleteJoinSwap(joinSwapService.GetByStudentAndSwapWish(userPreview.getUserId(),swapWishId));
 		return ResponseEntity.ok().build();
 	}
 }
